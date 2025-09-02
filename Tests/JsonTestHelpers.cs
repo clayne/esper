@@ -58,7 +58,7 @@ namespace Tests {
                     return;
                 }
                 if (value == "") {
-                    Assert.IsNull(v.GetData<float>());
+                    Assert.IsNull(v.GetData<float?>());
                     return;
                 }
             }

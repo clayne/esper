@@ -2,6 +2,7 @@
 using esper.data.headers;
 using esper.defs;
 using esper.helpers;
+using System.Reflection;
 
 namespace esper.setup {
     using ClassMap = Dictionary<string, Type>;
@@ -111,7 +112,8 @@ namespace esper.setup {
             if (!defClasses.ContainsKey(defId)) return null;
             //throw new Exception($"Def type not implemented: {defId}");
             var args = new object[] { this, src };
-            var def = (Def)Activator.CreateInstance(defClasses[defId], args);
+            var ctors = defClasses[defId].GetConstructors(BindingFlags.Public | BindingFlags.CreateInstance | BindingFlags.NonPublic | BindingFlags.Instance);
+            var def = (Def)ctors.First(ctor => ctor.GetParameters().Length == 2).Invoke(args);
             return def;
         }
 

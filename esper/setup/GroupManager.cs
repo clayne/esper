@@ -1,4 +1,5 @@
 ﻿using esper.defs;
+using System.Reflection;
 
 namespace esper.setup {
     using ClassMap = Dictionary<int, Type>;
@@ -22,7 +23,9 @@ namespace esper.setup {
             int groupType = src.Value<int?>("groupType") ?? 0;
             var defClass = ResolveDefClass(groupType);
             var args = new object[2] { manager, src };
-            return (Def)Activator.CreateInstance(defClass, args);
+            var ctors = defClass.GetConstructors(BindingFlags.Public | BindingFlags.CreateInstance | BindingFlags.NonPublic | BindingFlags.Instance);
+            var def = (Def)ctors.First(ctor => ctor.GetParameters().Length == 2).Invoke(args);
+            return def;
         }
 
         internal void LoadGroupDefClass(Type type) {
