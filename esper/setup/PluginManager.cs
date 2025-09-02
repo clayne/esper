@@ -1,7 +1,7 @@
 ﻿using esper.data;
 using esper.elements;
-using esper.plugins;
 using esper.io;
+using esper.plugins;
 
 namespace esper.setup {
     [JSExport]
@@ -115,7 +115,7 @@ namespace esper.setup {
 
         public List<string> GetMasterFileNames(string filePath) {
             var plugin = LoadPluginHeader(filePath);
-            return (plugin as IMasterManager).masters.filenames;
+            return plugin.masters.filenames;
         }
 
         internal PluginFile NewFile(string name) {
@@ -129,9 +129,8 @@ namespace esper.setup {
 
         internal void DestroyRefBy(PluginFile plugin) {
             foreach (var loadedPlugin in plugins) {
-                var recordManager = loadedPlugin as IRecordManager;
                 if (loadedPlugin.Equals(plugin)) continue;
-                foreach (var record in recordManager.records)
+                foreach (var record in plugin.records)
                     record.DestroyRefBy(plugin);
             }
         }

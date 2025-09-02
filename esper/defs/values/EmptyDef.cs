@@ -3,27 +3,26 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class EmptyDef : ValueDef {
         public static readonly string defId = "empty";
         public override XEDefType valueDefType => XEDefType.dtEmpty;
 
         public override int? size => 0;
 
-        public EmptyDef(DefinitionManager manager, JObject src)
+        internal EmptyDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override string GetValue(ValueElement element) {
             return "";
         }
 
-        public override void SetValue(ValueElement element, string value) {}
+        public override void SetValue(ValueElement element, string value) { }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return null;
         }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             return null;
         }
 

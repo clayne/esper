@@ -1,5 +1,5 @@
 ﻿namespace esper.plugins {
-    [JSExport]
+    //[JSExport]
     public struct PluginFileOptions {
         public bool temporary;
     }

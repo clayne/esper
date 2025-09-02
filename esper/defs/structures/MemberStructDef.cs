@@ -1,11 +1,10 @@
-﻿using esper.elements;
+﻿using esper.data;
+using esper.elements;
 using esper.helpers;
 using esper.io;
 using esper.setup;
-using esper.data;
 
 namespace esper.defs {
-    [JSExport]
     public class MemberStructDef : MembersDef {
         public static readonly string defId = "memberStruct";
         public override XEDefType defType => XEDefType.dtStruct;
@@ -14,7 +13,7 @@ namespace esper.defs {
         private readonly List<int> sortKeyIndices;
         private readonly bool unordered;
 
-        public MemberStructDef(DefinitionManager manager, JObject src)
+        internal MemberStructDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             sortKeyIndices = JsonHelpers.List<int>(src, "sortKey");
             unordered = src.Value<bool>("unordered");

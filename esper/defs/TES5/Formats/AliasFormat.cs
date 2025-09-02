@@ -3,13 +3,11 @@ using esper.elements;
 using esper.helpers;
 using esper.resolution;
 using esper.setup;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.ObjectModel;
 
 namespace esper.defs.TES5 {
     public class AliasFormat : FormatDef {
-        public AliasFormat(DefinitionManager manager, JObject src) 
+        internal AliasFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public virtual MainRecord ResolveQuestRec(ValueElement element) {
@@ -26,7 +24,7 @@ namespace esper.defs.TES5 {
         }
 
         private string AliasToStr(Element alias) {
-            int index = alias.GetData("[0]");
+            int index = alias.GetData<int>("[0]");
             string alid = alias.GetValue("ALID");
             return alid != "" ? $"{index:3} {alid}" : $"{index:3}";
         }
@@ -35,17 +33,17 @@ namespace esper.defs.TES5 {
         // TODO: sort key
         // TODO: edit info?
 
-        public override string DataToValue(ValueElement element, dynamic data) {
+        internal override string DataToValue(ValueElement element, dynamic data) {
             if (!sessionOptions.resolveAliases) return DataToValue(data);
             var questRef = ResolveQuestRec(element);
-            if (questRef == null || questRef.signature != Signatures.QUST) 
+            if (questRef == null || questRef.signature != Signatures.QUST)
                 return DataToValue(data);
             foreach (Element alias in GetAliases(questRef))
-                if (alias.GetData("[0]") == data) return AliasToStr(alias);
+                if (alias.GetData<uint>("[0]") == data) return AliasToStr(alias);
             return DataToValue(data);
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
+        internal override dynamic ValueToData(ValueElement element, string value) {
             return DataHelpers.ParseInt64(value, -1);
         }
     }
@@ -53,7 +51,7 @@ namespace esper.defs.TES5 {
     public class ConditionAliasFormat : AliasFormat {
         public static readonly string defId = "ConditionAliasFormat";
 
-        public ConditionAliasFormat(DefinitionManager manager, JObject src)
+        internal ConditionAliasFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override MainRecord ResolveQuestRec(ValueElement element) {
@@ -71,7 +69,7 @@ namespace esper.defs.TES5 {
     public class PackageLocationAliasFormat : AliasFormat {
         public static readonly string defId = "PackageLocationAliasFormat";
 
-        public PackageLocationAliasFormat(DefinitionManager manager, JObject src)
+        internal PackageLocationAliasFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override MainRecord ResolveQuestRec(ValueElement element) {
@@ -82,7 +80,7 @@ namespace esper.defs.TES5 {
     public class QuestAliasFormat : AliasFormat {
         public static readonly string defId = "QuestAliasFormat";
 
-        public QuestAliasFormat(DefinitionManager manager, JObject src)
+        internal QuestAliasFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override MainRecord ResolveQuestRec(ValueElement element) {
@@ -93,7 +91,7 @@ namespace esper.defs.TES5 {
     public class QuestExternalAliasFormat : AliasFormat {
         public static readonly string defId = "QuestExternalAliasFormat";
 
-        public QuestExternalAliasFormat(DefinitionManager manager, JObject src)
+        internal QuestExternalAliasFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override MainRecord ResolveQuestRec(ValueElement element) {
@@ -104,7 +102,7 @@ namespace esper.defs.TES5 {
     public class ScriptObjectAliasFormat : AliasFormat {
         public static readonly string defId = "ScriptObjectAliasFormat";
 
-        public ScriptObjectAliasFormat(DefinitionManager manager, JObject src)
+        internal ScriptObjectAliasFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override MainRecord ResolveQuestRec(ValueElement element) {

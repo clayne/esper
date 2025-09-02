@@ -1,6 +1,6 @@
 ﻿namespace esper.helpers {
-    public static class CollectionHelpers {
-        public static T1 BinarySearch<T1>(
+    internal static class CollectionHelpers {
+        internal static T1 BinarySearch<T1>(
             IList<T1> list, Func<T1, int> compare, bool returnLast = false
         ) {
             int low = 0;

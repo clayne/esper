@@ -1,6 +1,6 @@
-﻿using esper.plugins;
-using balsa.setup;
+﻿using balsa.setup;
 using balsa.stringtables;
+using esper.plugins;
 
 namespace esper.setup {
     [JSExport]
@@ -33,7 +33,7 @@ namespace esper.setup {
 
         private List<string> GetAllArchives() {
             var searchPath = session.dataPath;
-            if (searchPath == null) 
+            if (searchPath == null)
                 throw new Exception("Session data path was not provided.");
             var search = $"*{session.game.archiveExtension}";
             return Directory.GetFiles(searchPath, search).ToList();

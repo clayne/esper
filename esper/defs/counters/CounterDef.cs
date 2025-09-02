@@ -5,7 +5,7 @@ namespace esper.defs {
     public class CounterDef : Def {
         public virtual bool canSetCount => false;
 
-        public CounterDef(DefinitionManager manager, JObject src)
+        internal CounterDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public virtual void SetCount(Container container, UInt32 count) {

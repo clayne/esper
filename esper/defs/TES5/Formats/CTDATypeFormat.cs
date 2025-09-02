@@ -1,7 +1,5 @@
 ﻿using esper.elements;
 using esper.setup;
-using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
 
 namespace esper.defs.TES5 {
     public class CTDATypeFormat : FormatDef {
@@ -11,20 +9,20 @@ namespace esper.defs.TES5 {
         private static FlagsDef ctdaTypeFlags;
         private static EnumDef ctdaTypeEnum;
 
-        public CTDATypeFormat(DefinitionManager manager, JObject src)
+        internal CTDATypeFormat(DefinitionManager manager, JObject src)
             : base(manager, src) {
-            ctdaTypeFlags = (FlagsDef) manager.ResolveDef("CtdaTypeFlags");
-            ctdaTypeEnum = (EnumDef) manager.ResolveDef("CtdaTypeEnum");
+            ctdaTypeFlags = (FlagsDef)manager.ResolveDef("CtdaTypeFlags");
+            ctdaTypeEnum = (EnumDef)manager.ResolveDef("CtdaTypeEnum");
         }
 
-        public override string DataToValue(ValueElement element, dynamic data) {
+        internal override string DataToValue(ValueElement element, dynamic data) {
             long d = data;
             string type = ctdaTypeEnum.DataToValue(element, d & 0xE0);
             string flags = ctdaTypeFlags.DataToValue(element, d & 0x1F);
             return flags != "" ? $"{type} / {flags}" : type;
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
+        internal override dynamic ValueToData(ValueElement element, string value) {
             var match = valueExpr.Match(value);
             if (match == null) return 0;
             var enumData = ctdaTypeEnum.ValueToData(element, match.Groups[1].Value);

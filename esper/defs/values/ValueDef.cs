@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class ValueDef : MaybeSubrecordDef {
         public override XEDefType defType => IsSubrecord()
             ? XEDefType.dtSubRecord : valueDefType;
@@ -18,7 +17,7 @@ namespace esper.defs {
         protected virtual bool isVariableSize => fixedSize == null;
         public virtual bool isNumeric => false;
 
-        public ValueDef(DefinitionManager manager, JObject src)
+        internal ValueDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             formatDef = JsonHelpers.FormatDef(manager, src);
             fixedSize = src.Value<int?>("size");
@@ -43,24 +42,24 @@ namespace esper.defs {
             return new ValueElement(container, this);
         }
 
-        public virtual dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal virtual dynamic ReadData(DataSource source, UInt32? dataSize) {
             throw new NotImplementedException();
         }
 
-        public virtual dynamic DefaultData() {
+        internal virtual dynamic DefaultData() {
             throw new NotImplementedException();
         }
 
-        public virtual void SetData(ValueElement element, dynamic data) {
+        internal virtual void SetData(ValueElement element, dynamic data) {
             element._data = data;
             element.MarkModified();
         }
 
-        public virtual string DataToString(dynamic data) {
+        internal virtual string DataToString(dynamic data) {
             return data.ToString();
         }
 
-        public virtual string DataToSortKey(dynamic data) {
+        internal virtual string DataToSortKey(dynamic data) {
             return data.ToString($"X{2 * size}");
         }
 
@@ -87,7 +86,7 @@ namespace esper.defs {
         }
 
         internal override UInt32 GetSize(Element element) {
-            return (UInt32) (base.GetSize(element) + (size ?? 0));
+            return (UInt32)(base.GetSize(element) + (size ?? 0));
         }
 
         internal virtual void WriteData(

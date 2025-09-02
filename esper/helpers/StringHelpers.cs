@@ -1,11 +1,8 @@
-﻿using System;
-using System.Text.RegularExpressions;
-
-namespace esper.helpers {
+﻿namespace esper.helpers {
     public static class StringHelpers {
         static readonly Regex signatureExpr = new Regex(@"^([^\\s]{4}) - ");
         static readonly char[] digits = new char[] {
-            '0', '1', '2', '3', '4', '5', '6', '7', 
+            '0', '1', '2', '3', '4', '5', '6', '7',
             '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
         };
 
@@ -41,8 +38,8 @@ namespace esper.helpers {
                 throw new ArgumentException("Input string improperly formatted.");
             byte[] bytes = new byte[value.Length / 3];
             for (int i = 0; i < bytes.Length; i++) {
-                bytes[i] = (byte) (
-                    ParseHexChar(value[3 * i]) << 4 + 
+                bytes[i] = (byte)(
+                    ParseHexChar(value[3 * i]) << 4 +
                     ParseHexChar(value[3 * i + 1])
                 );
             }
@@ -62,7 +59,7 @@ namespace esper.helpers {
             remainingPath = path.Substring(separatorIndex + 1);
         }
 
-        public static dynamic DynamicParse(string value) {
+        internal static dynamic DynamicParse(string value) {
             if (Int64.TryParse(value, out long n)) return n;
             if (UInt64.TryParse(value, out ulong m)) return m;
             throw new Exception("Could not parse " + value);

@@ -1,6 +1,5 @@
 ﻿using esper.elements;
 using esper.resolution;
-using System;
 
 namespace esper.defs.TES5 {
     public class ScriptObjFormatDecider : Decider {
@@ -10,7 +9,7 @@ namespace esper.defs.TES5 {
                 return element.def.IsSubrecord();
             });
             if (vmad == null) return 0;
-            Int16 objectFormat = vmad.GetData("Object Format");
+            Int16 objectFormat = vmad.GetData<Int16>("Object Format");
             return objectFormat == 1 ? 1 : 0;
         }
     }

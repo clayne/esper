@@ -2,7 +2,6 @@
 using esper.plugins;
 
 namespace esper.data {
-    [JSExport]
     public class FormIdFormat {
         public virtual string ToString(FormId fid) {
             throw new NotImplementedException();
@@ -13,7 +12,6 @@ namespace esper.data {
         }
     }
 
-    [JSExport]
     public class BraceFormat : FormIdFormat {
         private readonly static Regex braceExpr = new Regex(
             @"^\{([^:]+):([0-9A-Fa-f]{6})\}$"
@@ -33,12 +31,12 @@ namespace esper.data {
             if (match == null) return null;
             var filename = match.Groups[1].Value;
             var manager = element.file.session.pluginManager;
-            var targetFile = filename == "Null" 
+            var targetFile = filename == "Null"
                 ? null
                 : manager.GetFileByName(filename);
             var ordinal = element.file.FileToOrdinal(targetFile, false);
             var localFormId = UInt32.Parse(match.Groups[2].Value);
-            UInt32 fileFormId = (UInt32) ((ordinal << 24) + localFormId);
+            UInt32 fileFormId = (UInt32)((ordinal << 24) + localFormId);
             return new FormId(targetFile, fileFormId);
         }
     }

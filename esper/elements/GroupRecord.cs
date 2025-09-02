@@ -1,8 +1,8 @@
-﻿using esper.defs;
-using esper.plugins;
-using esper.io;
+﻿using esper.data;
 using esper.data.headers;
-using esper.data;
+using esper.defs;
+using esper.io;
+using esper.plugins;
 
 namespace esper.elements {
     [JSExport]
@@ -22,7 +22,7 @@ namespace esper.elements {
 
         public UInt32 groupSize => header.groupSize;
         public int groupType => header.groupType;
-        public dynamic label => groupDef.ConvertLabel(this, header.label);
+        internal dynamic label => groupDef.ConvertLabel(this, header.label);
         public UInt32 dataSize => (UInt32)(groupSize - groupHeaderDef.size);
 
         public bool isTopGroup => groupDef.isTopGroup;
@@ -86,7 +86,7 @@ namespace esper.elements {
         public void IndexRecordsByEditorId() {
             recordsByEditorID = new EditorIdMap();
             foreach (var element in elements)
-                if (element is MainRecord rec) 
+                if (element is MainRecord rec)
                     recordsByEditorID.Add(rec);
         }
 
@@ -110,7 +110,7 @@ namespace esper.elements {
             throw new Exception($"Cannot copy group records into ${target.def.displayName}");
         }
 
-        public override JToken ToJson() {
+        internal override JToken ToJson() {
             if (!isChildGroup) return ToJsonArray();
             return new JObject {
                 ["groupType"] = groupType,

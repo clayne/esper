@@ -1,5 +1,6 @@
 ﻿using esper.defs;
 using esper.elements;
+using esper.resolution;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
@@ -9,6 +10,14 @@ using System.Linq;
 
 namespace Tests {
     public static class JsonTestHelpers {
+        internal static JObject ObjectAssign(
+            JObject target, params JObject[] sources
+        ) {
+            foreach (JObject source in sources)
+                target.Merge(source);
+            return target;
+        }
+
         private static void CheckKey(JObject json, string key, Element parent) {
             Assert.IsTrue(json.ContainsKey(key), 
                 $"Element {key} should not be in {parent.path}"
@@ -25,8 +34,8 @@ namespace Tests {
         private static void TestFloatValue(
             ValueElement element, float expectedFloat
         ) {
-            Assert.IsNotNull(element.data);
-            float actualFloat = element.data;
+            Assert.IsNotNull(element.GetData<float>());
+            float actualFloat = element.GetData<float>();
             float diff = expectedFloat - actualFloat;
             Assert.IsTrue(diff <= element.sessionOptions.epsilon,
                 $"Float values were not close {element.path}, diff: {diff}"
@@ -49,7 +58,7 @@ namespace Tests {
                     return;
                 }
                 if (value == "") {
-                    Assert.IsNull(v.data);
+                    Assert.IsNull(v.GetData<float>());
                     return;
                 }
             }

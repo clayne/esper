@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class StructDef : MaybeSubrecordDef {
         public readonly static string defId = "struct";
         public override XEDefType defType => XEDefType.dtStruct;
@@ -19,7 +18,7 @@ namespace esper.defs {
         public override bool canContainFormIds => _canContainFormIds;
         public override List<ElementDef> childDefs => elementDefs;
 
-        public StructDef(DefinitionManager manager, JObject src)
+        internal StructDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             elementDefs = JsonHelpers.Defs<ElementDef>(manager, src, "elements");
             sortKeyIndices = JsonHelpers.List<int>(src, "sortKey");
@@ -29,7 +28,7 @@ namespace esper.defs {
 
         public StructDef(StructDef other) : base(other) {
             elementDefs = new List<ElementDef>(other.elementDefs);
-            sortKeyIndices = other.sortKeyIndices == null 
+            sortKeyIndices = other.sortKeyIndices == null
                 ? null
                 : new List<int>(other.sortKeyIndices);
             elementMap = other.elementMap == null
@@ -96,7 +95,7 @@ namespace esper.defs {
 
         internal int GetInternalOrder(ElementDef childDef) {
             var index = elementDefs.IndexOf(childDef);
-            if (index == -1) 
+            if (index == -1)
                 throw new Exception($"Element {childDef.name} is not supported.");
             return elementMap != null
                 ? elementMap[index]

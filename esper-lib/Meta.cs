@@ -2,7 +2,7 @@
 using Microsoft.JavaScript.NodeApi;
 
 namespace esper_lib {
-    [JSExport]
+    //[JSExport]
     public static class Meta {
         internal static Session session;
         internal static LoaderState loaderState = LoaderState.Inactive;
@@ -46,12 +46,12 @@ namespace esper_lib {
         }
 
         // public api
-        [JSExport]
+        //[JSExport]
         public static void EndSession() {
             // TODO
         }
 
-        [JSExport]
+        //[JSExport]
         public static void Release(uint id) {
             try {
                 if (id == 0 || id >= store.Count || store[(int) id] == null) 

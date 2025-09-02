@@ -3,7 +3,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class FloatDef : ValueDef {
         public static readonly string defId = "float";
         public override XEDefType valueDefType => XEDefType.dtFloat;
@@ -12,18 +11,18 @@ namespace esper.defs {
 
         public override int? size => 4;
 
-        public FloatDef(DefinitionManager manager, JObject src)
-            : base(manager, src) {}
+        internal FloatDef(DefinitionManager manager, JObject src)
+            : base(manager, src) { }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             return source.reader.ReadSingle();
         }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return 0.0f;
         }
 
-        public override string DataToSortKey(dynamic data) {
+        internal override string DataToSortKey(dynamic data) {
             if (Single.IsNaN(data)) return new string(' ', 23);
             if (data == Single.MaxValue) return "+" + new string('9', 22);
             string sortKey = Math.Abs(data)
@@ -33,7 +32,7 @@ namespace esper.defs {
             return (isNegative ? '-' : '+') + sortKey;
         }
 
-        public override string DataToString(dynamic data) {
+        internal override string DataToString(dynamic data) {
             if (Single.IsNaN(data)) return "NaN";
             if (Single.IsInfinity(data)) return "Inf";
             if (data == Single.MaxValue) return "Default";

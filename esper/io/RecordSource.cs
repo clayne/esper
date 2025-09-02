@@ -1,8 +1,6 @@
 ﻿using esper.data;
 using esper.elements;
 using esper.plugins;
-using System;
-using System.IO;
 
 namespace esper.io {
     public class RecordSource : DataSource {
@@ -20,7 +18,7 @@ namespace esper.io {
 
         public RecordSource(MainRecord record, byte[] data) {
             this.record = record;
-            dataSize = (uint) data.Length;
+            dataSize = (uint)data.Length;
             dataStream = new MemoryStream(data);
             reader = new BinaryReader(stream);
         }

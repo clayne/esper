@@ -2,9 +2,6 @@
 using esper.helpers;
 using esper.resolution;
 using esper.setup;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.IO;
 
 namespace esper.defs.TES5 {
     internal class TintEntries {
@@ -12,7 +9,7 @@ namespace esper.defs.TES5 {
         public bool female;
         private Dictionary<int, string> entries;
         private string genderStr => female ? "Female" : "Male";
-        private string tintMasksPath => 
+        private string tintMasksPath =>
             @$"Head Data\{genderStr} Head Data\Tint Masks";
 
         public TintEntries(MainRecord race, string raceId, bool female) {
@@ -30,12 +27,12 @@ namespace esper.defs.TES5 {
         }
 
         private void LoadEntries(MainRecord race) {
-            var tintMasks = (Container) race.GetElement(tintMasksPath);
+            var tintMasks = (Container)race.GetElement(tintMasksPath);
             if (tintMasks == null) return;
             entries = new Dictionary<int, string>(tintMasks.count);
             foreach (Element entry in tintMasks.elements) {
                 var textureElement = entry.GetElement(@"Tint Layer\Texture");
-                var index = textureElement.GetData("TINI");
+                var index = textureElement.GetData<int>("TINI");
                 entries[index] = GetTintName(textureElement);
             }
         }
@@ -68,12 +65,12 @@ namespace esper.defs.TES5 {
         public static readonly string defId = "TintLayerFormat";
         private static readonly TintCache tintCache = new TintCache();
 
-        public TintLayerFormat(DefinitionManager manager, JObject src)
-            : base(manager, src) {}
+        internal TintLayerFormat(DefinitionManager manager, JObject src)
+            : base(manager, src) { }
 
         // TODO: sortKey, warnings
 
-        public override string DataToValue(ValueElement element, dynamic data) {
+        internal override string DataToValue(ValueElement element, dynamic data) {
             int index = data;
             var actor = element?.GetElement("^Record");
             var female = actor?.GetFlag(@"ACBS\Flags", "Female");
@@ -85,7 +82,7 @@ namespace esper.defs.TES5 {
             return $"{index} {entryName}";
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
+        internal override dynamic ValueToData(ValueElement element, string value) {
             return DataHelpers.ParseInt64(value);
         }
     }

@@ -2,8 +2,6 @@
 using esper.elements;
 using esper.plugins;
 using Ionic.Zlib;
-using System;
-using System.IO;
 using System.Text;
 
 namespace esper.io {
@@ -47,13 +45,13 @@ namespace esper.io {
             if (prefix == 1) {
                 if (count > byte.MaxValue)
                     throw new Exception("Too many elements, overflowed prefix.");
-                writer.Write((byte) count);
+                writer.Write((byte)count);
             } else if (prefix == 2) {
                 if (count > UInt16.MaxValue)
                     throw new Exception("Too many elements, overflowed prefix.");
-                writer.Write((UInt16) count);
+                writer.Write((UInt16)count);
             } else if (prefix == 4) {
-                writer.Write((UInt32) count);
+                writer.Write((UInt32)count);
             } else {
                 throw new Exception($"Unknown prefix type {prefix}");
             }
@@ -68,11 +66,11 @@ namespace esper.io {
 
         // TODO: we can do this better.
         internal void WriteCompressedData() {
-            var compressedDataSize = (UInt32) compressedStream.Position;
+            var compressedDataSize = (UInt32)compressedStream.Position;
             fileWriter.Write(compressedDataSize);
             compressedStream.Position = 0;
             var reader = new BinaryReader(compressedStream);
-            var bytes = reader.ReadBytes((int) compressedDataSize);
+            var bytes = reader.ReadBytes((int)compressedDataSize);
             var zstream = new ZlibStream(fileStream, CompressionMode.Compress);
             var zwriter = new BinaryWriter(zstream);
             zwriter.Write(bytes);

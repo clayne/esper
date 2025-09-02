@@ -1,6 +1,6 @@
-﻿using esper.plugins;
+﻿using esper.data;
+using esper.plugins;
 using esper.setup;
-using esper.data;
 
 namespace esper.elements {
     [JSExport]
@@ -49,7 +49,7 @@ namespace esper.elements {
             throw new Exception("Root elements cannot be removed.");
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
+        internal override Element CopyInto(Element container, CopyOptions options) {
             throw new Exception("Root elements cannot be copied.");
         }
     }

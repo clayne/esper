@@ -1,12 +1,12 @@
-﻿using esper.data.headers;
+﻿using esper.data;
+using esper.data.headers;
 using esper.elements;
 using esper.helpers;
 using esper.io;
 using esper.setup;
-using esper.data;
 
 namespace esper.defs {
-    [JSExport]
+    //[JSExport]
     public class ElementDef : Def {
         public readonly bool required;
         public ConflictType conflictType { get; }
@@ -22,7 +22,9 @@ namespace esper.defs {
 
         public virtual List<ElementDef> childDefs => null;
 
-        public ElementDef(DefinitionManager manager, JObject src)
+        public ElementDef() { }
+
+        internal ElementDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             name = src.Value<string>("name");
             required = src.Value<bool>("required");
@@ -30,7 +32,7 @@ namespace esper.defs {
             dynamicConflictType = src.ContainsKey("getConflictType");
         }
 
-        public ElementDef(ElementDef other) : base(other) {
+        internal ElementDef(ElementDef other) : base(other) {
             name = other.name;
             required = other.required;
             conflictType = other.conflictType;
@@ -97,8 +99,8 @@ namespace esper.defs {
         }
 
         internal virtual UInt32 GetSize(Element element) {
-            if (element is Container container && container._internalElements != null) 
-                return (UInt32) container._internalElements.Sum(e => e.size);
+            if (element is Container container && container._internalElements != null)
+                return (UInt32)container._internalElements.Sum(e => e.size);
             return 0;
         }
 
@@ -109,16 +111,16 @@ namespace esper.defs {
         }
 
         internal virtual MainRecordDef ImproviseRecordDef(IRecordHeader header) {
-            var recordDef = manager.GetRecordDef(header.signature) ?? 
+            var recordDef = manager.GetRecordDef(header.signature) ??
                 manager.ImproviseRecordDef(header);
             childDefs.Add(recordDef);
-            return (MainRecordDef) recordDef;
+            return (MainRecordDef)recordDef;
         }
 
         internal virtual GroupDef GetGroupDef(IGroupHeader header) {
-            foreach(var childDef in childDefs) {
+            foreach (var childDef in childDefs) {
                 if (!(childDef is GroupDef groupDef)) continue;
-                if (groupDef.groupType == header.groupType) 
+                if (groupDef.groupType == header.groupType)
                     return groupDef;
             }
             if (sessionOptions.improvise) return ImproviseGroupDef(header);

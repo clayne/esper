@@ -3,7 +3,7 @@ using esper.resolution;
 using Microsoft.JavaScript.NodeApi;
 
 namespace esper_lib {
-    [JSExport]
+    //[JSExport]
     public static class Elements {
         // internal private api
         internal static Element GetElementEx(uint id, string path) {
@@ -17,7 +17,7 @@ namespace esper_lib {
         }
 
         // public api
-        [JSExport]
+        //[JSExport]
         public static bool HasElement(uint id, string path) {
             try {
                 var e = NativeGetElement(id, path);
@@ -27,7 +27,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static uint GetElement(uint id, string path) {
             try {
                 var e = GetElementEx(id, path);
@@ -37,7 +37,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static uint AddElement(uint id, string path) {
             try {
                 Element e = (Element)Meta.Resolve(id, true);
@@ -50,7 +50,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static uint AddElementValue(uint id, string path, string value) {
             try {
                 Element e = (Element)Meta.Resolve(id, true);
@@ -65,7 +65,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void RemoveElement(uint id, string path) {
             try {
                 var e = GetElementEx(id, path);
@@ -75,7 +75,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void RemoveElementOrParent(uint id) {
             try {
                 Element e = (Element)Meta.Resolve(id, true);
@@ -89,7 +89,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void SetElement(uint id, uint id2) {
             try {
                 Element e = (Element)Meta.Resolve(id, false);
@@ -101,7 +101,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static uint[] GetElements(uint id, string path, bool sort, bool filter, bool sparse) {
             try {
                 var c = GetElementEx(id, path);
@@ -111,7 +111,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static string[] GetDefNames(uint id) {
             try {
                 Element e = (Element)Meta.Resolve(id, false);

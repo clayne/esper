@@ -40,7 +40,7 @@ namespace esper {
         }
 
         private IniData _iniData;
-        public IniData gameIni {
+        internal IniData gameIni {
             get {
                 if (_iniData == null) {
                     var parser = new FileIniDataParser();

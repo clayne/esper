@@ -1,30 +1,25 @@
 using esper.defs;
 using esper.setup;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 
 namespace esper.helpers {
-    public class JsonHelpers {
-        public static JObject ObjectAssign(
+    internal class JsonHelpers {
+        internal static JObject ObjectAssign(
             JObject target, params JObject[] sources
         ) {
-            foreach(JObject source in sources)
+            foreach (JObject source in sources)
                 target.Merge(source);
             return target;
         }
 
-        public static List<T> List<T>(JObject src, string key) {
+        internal static List<T> List<T>(JObject src, string key) {
             if (!src.ContainsKey(key)) return null;
             return src.Value<JArray>(key).ToObject<List<T>>();
         }
 
         internal static Int64 ParseOptionKey(string key) {
             if (Int64.TryParse(key, out Int64 n)) return n;
-            var bytes = Encoding.ASCII.GetBytes(key); 
+            var bytes = Encoding.ASCII.GetBytes(key);
             return BitConverter.ToUInt32(bytes);
         }
 
@@ -55,28 +50,28 @@ namespace esper.helpers {
         }
 
         internal static ConflictType ParseConflictType(JObject src) {
-            if (!src.ContainsKey("conflictType")) 
+            if (!src.ContainsKey("conflictType"))
                 return ConflictType.Normal;
             string key = src.Value<string>("conflictType");
             return (ConflictType)Enum.Parse(typeof(ConflictType), key);
         }
 
-        public static Dictionary<string, string> Dictionary(
+        internal static Dictionary<string, string> Dictionary(
             JObject src, string key
         ) {
             if (!src.ContainsKey(key)) return null;
             return src.Value<JObject>(key).ToObject<Dictionary<string, string>>();
         }
 
-        public static ElementDef ElementDef(
+        internal static ElementDef ElementDef(
             DefinitionManager manager, JObject src, string key
         ) {
             ErrorHelpers.CheckDefProperty(src, key);
             var defSrc = src.Value<JObject>(key);
-            return (ElementDef) manager.BuildDef(defSrc);
+            return (ElementDef)manager.BuildDef(defSrc);
         }
 
-        public static List<T> Defs<T>(
+        internal static List<T> Defs<T>(
             DefinitionManager manager, JObject src, string key, bool optional = false
         ) where T : Def {
             if (!optional) ErrorHelpers.CheckDefProperty(src, key);
@@ -86,25 +81,25 @@ namespace esper.helpers {
                 throw new Exception("No def sources found.");
             }
             return sources.Select(source => {
-                return (T) manager.BuildDef((JObject)source);
+                return (T)manager.BuildDef((JObject)source);
             }).Where(def => def != null).ToList();
         }
 
-        public static Def Def(DefinitionManager manager, JObject src, string key) {
+        internal static Def Def(DefinitionManager manager, JObject src, string key) {
             if (!src.ContainsKey(key)) return null;
             var defSrc = src.Value<JObject>(key);
             return manager.BuildDef(defSrc);
         }
 
-        public static FormatDef FormatDef(DefinitionManager manager, JObject src) {
+        internal static FormatDef FormatDef(DefinitionManager manager, JObject src) {
             if (!src.ContainsKey("format")) return null;
             var formatSrc = src.Value<JObject>("format");
             return (FormatDef)manager.BuildDef(formatSrc);
         }
 
-        public static SignaturesDef SignaturesDef(DefinitionManager manager, JObject src) {
-            var signaturesSrc = src["signatures"] is JObject 
-                ? src.Value<JObject>("signatures") 
+        internal static SignaturesDef SignaturesDef(DefinitionManager manager, JObject src) {
+            var signaturesSrc = src["signatures"] is JObject
+                ? src.Value<JObject>("signatures")
                 : new JObject {
                     { "type", "signatures" },
                     { "signatures", src.Value<JArray>("signatures") }
@@ -112,7 +107,7 @@ namespace esper.helpers {
             return (SignaturesDef)manager.BuildDef(signaturesSrc);
         }
 
-        public static Decider Decider(DefinitionManager manager, JObject src) {
+        internal static Decider Decider(DefinitionManager manager, JObject src) {
             ErrorHelpers.CheckDefProperty(src, "decider");
             return manager.GetDecider(src.Value<string>("decider"));
         }

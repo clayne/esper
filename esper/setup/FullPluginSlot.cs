@@ -1,7 +1,7 @@
 ﻿using esper.plugins;
 
 namespace esper.setup {
-    [JSExport]
+    //[JSExport]
     public class FullPluginSlot : PluginSlot {
         public byte index;
 

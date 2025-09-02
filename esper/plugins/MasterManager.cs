@@ -1,27 +1,19 @@
-﻿using esper.elements;
-using esper.setup;
+﻿using esper.data;
+using esper.elements;
 using esper.resolution;
-using esper.data;
+using esper.setup;
 
 namespace esper.plugins {
     using FileReferenceMap = Dictionary<string, List<Element>>;
 
     [JSExport]
-    public interface IMasterManager {
-        public PluginFile file { get; }
-        public ReadOnlyMasterList originalMasters { get; internal set; }
-        public MasterList masters { get; internal set; }
-        public bool mastersChanged { get; internal set; }
-    }
-
-    [JSExport]
     public static class MasterManagerExtensions {
-        internal static Element GetMastersElement(this IMasterManager m) {
+        internal static Element GetMastersElement(this PluginFile m) {
             if (m.file.header == null) return null;
             return m.file.header.GetElement("Master Files");
         }
 
-        private static List<PluginFile> GetMasterFiles(this IMasterManager m) {
+        private static List<PluginFile> GetMasterFiles(this PluginFile m) {
             var masterFiles = new List<PluginFile>();
             Element masterFilesElement = m.GetMastersElement();
             if (masterFilesElement == null) return masterFiles;
@@ -34,20 +26,20 @@ namespace esper.plugins {
             return masterFiles;
         }
 
-        public static void InitMasters(this IMasterManager m) {
+        public static void InitMasters(this PluginFile m) {
             var masterFiles = GetMasterFiles(m);
             m.originalMasters = new ReadOnlyMasterList(m.file, masterFiles);
             m.masters = new MasterList(m.file, masterFiles);
         }
 
-        public static void UpdateMastersElement(this IMasterManager m) {
+        public static void UpdateMastersElement(this PluginFile m) {
             Element masterFilesElement = m.GetMastersElement();
             if (masterFilesElement == null) return;
             // TODO
         }
 
         public static PluginFile OrdinalToFile(
-            this IMasterManager m, byte ordinal, bool useCurrentMasters
+            this PluginFile m, byte ordinal, bool useCurrentMasters
         ) {
             if (m.masters == null) return null;
             return useCurrentMasters
@@ -56,24 +48,24 @@ namespace esper.plugins {
         }
 
         public static byte FileToOrdinal(
-            this IMasterManager m, PluginFile file, bool useCurrentMasters
+            this PluginFile m, PluginFile file, bool useCurrentMasters
         ) {
             return useCurrentMasters
                 ? m.masters.FileToOrdinal(file)
                 : m.originalMasters.FileToOrdinal(file);
         }
 
-        public static bool HasMaster(this IMasterManager m, PluginFile file) {
+        public static bool HasMaster(this PluginFile m, PluginFile file) {
             return m.masters.Contains(file);
         }
 
-        public static void AddMaster(this IMasterManager m, PluginFile file) {
+        public static void AddMaster(this PluginFile m, PluginFile file) {
             if (m.HasMaster(file)) return;
             m.mastersChanged = true;
             m.masters.Add(file);
         }
 
-        public static void RemoveMaster(this IMasterManager m, PluginFile file) {
+        public static void RemoveMaster(this PluginFile m, PluginFile file) {
             m.mastersChanged = true;
             m.masters.Remove(file);
         }
@@ -91,7 +83,7 @@ namespace esper.plugins {
         }
 
         public static FileReferenceMap GetMasterReferences(
-            this IMasterManager m
+            this PluginFile m
         ) {
             var refs = new FileReferenceMap();
             ForEachFormIdElement(m.file, (ValueElement element) => {
@@ -105,7 +97,7 @@ namespace esper.plugins {
         }
 
         public static Dictionary<string, int> CountMasterReferences(
-            this IMasterManager m
+            this PluginFile m
         ) {
             var counts = new Dictionary<string, int>();
             ForEachFormIdElement(m.file, (ValueElement element) => {
@@ -118,16 +110,16 @@ namespace esper.plugins {
             return counts;
         }
 
-        public static List<string> GetUnusedMasters(this IMasterManager m) {
+        public static List<string> GetUnusedMasters(this PluginFile m) {
             // TODO
             return null;
         }
 
-        public static void RemoveUnusedMasters(this IMasterManager m) {
+        public static void RemoveUnusedMasters(this PluginFile m) {
             // TODO
         }
 
-        public static void CheckMasters(this IMasterManager m) {
+        public static void CheckMasters(this PluginFile m) {
             if (m.masters.Count > 255)
                 throw new Exception("File master limit exceeded.");
         }

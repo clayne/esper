@@ -4,7 +4,7 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
+    //[JSExport]
     public class MaybeSubrecordDef : ElementDef {
         internal readonly Signature _signature;
 
@@ -13,7 +13,9 @@ namespace esper.defs {
             ? $"{_signature} - {name}"
             : name;
 
-        public MaybeSubrecordDef(DefinitionManager manager, JObject src) 
+        public MaybeSubrecordDef() {}
+
+        internal MaybeSubrecordDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             var sig = src.Value<string>("signature");
             _signature = Signature.FromString(sig);
@@ -33,12 +35,12 @@ namespace esper.defs {
 
         public override HashSet<Signature> GetSignatures(HashSet<Signature> sigs = null) {
             if (sigs == null) sigs = new HashSet<Signature>();
-            if (signature != null) sigs.Add(signature);
+            if (signature != Signatures.None) sigs.Add(signature);
             return sigs;
         }
 
         internal override UInt32 GetSize(Element element) {
-            return (UInt32) ((IsSubrecord() ? 6 : 0) + base.GetSize(element));
+            return (UInt32)((IsSubrecord() ? 6 : 0) + base.GetSize(element));
         }
 
         internal override void WriteElement(
@@ -46,7 +48,7 @@ namespace esper.defs {
         ) {
             if (!IsSubrecord()) return;
             output.WriteSignature(_signature);
-            output.writer.Write((UInt16) (element.def.GetSize(element) - 6));
+            output.writer.Write((UInt16)(element.def.GetSize(element) - 6));
         }
     }
 }

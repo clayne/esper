@@ -1,12 +1,11 @@
 using esper.data;
 using esper.elements;
 using esper.helpers;
-using esper.plugins;
 using esper.io;
+using esper.plugins;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class GroupDef : ElementDef {
         public static string defId = "group";
 
@@ -20,14 +19,14 @@ namespace esper.defs {
         public virtual bool isChildGroupChild => false;
         public virtual bool isTopGroup => false;
 
-        public GroupDef(DefinitionManager manager, JObject src)
+        internal GroupDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             childrenDefs = JsonHelpers.Defs<ElementDef>(
                 manager, src, "children", true
             );
         }
 
-        public virtual dynamic ConvertLabel(GroupRecord group, byte[] label) {
+        internal virtual dynamic ConvertLabel(GroupRecord group, byte[] label) {
             throw new NotImplementedException();
         }
 

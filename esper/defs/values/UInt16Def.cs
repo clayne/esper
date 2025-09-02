@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class UInt16Def : ValueDef {
         public static readonly string defId = "uint16";
         public override XEDefType valueDefType => XEDefType.dtInteger;
@@ -13,19 +12,19 @@ namespace esper.defs {
 
         public override int? size => 2;
 
-        public UInt16Def(DefinitionManager manager, JObject src)
+        internal UInt16Def(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             if (dataSize == 1) return (UInt16)source.reader.ReadByte();
             return source.reader.ReadUInt16();
         }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return (UInt16)0;
         }
 
-        public override void SetData(ValueElement element, dynamic data) {
+        internal override void SetData(ValueElement element, dynamic data) {
             element._data = sessionOptions.clampIntegerValues
                 ? DataHelpers.ClampToUInt16(data)
                 : (UInt16)data;

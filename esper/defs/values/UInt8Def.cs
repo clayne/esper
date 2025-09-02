@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class UInt8Def : ValueDef {
         public static readonly string defId = "uint8";
         public override XEDefType valueDefType => XEDefType.dtInteger;
@@ -13,18 +12,18 @@ namespace esper.defs {
 
         public override int? size => 1;
 
-        public UInt8Def(DefinitionManager manager, JObject src)
-            : base(manager, src) {}
+        internal UInt8Def(DefinitionManager manager, JObject src)
+            : base(manager, src) { }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             return source.reader.ReadByte();
         }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return (byte)0;
         }
 
-        public override void SetData(ValueElement element, dynamic data) {
+        internal override void SetData(ValueElement element, dynamic data) {
             element._data = sessionOptions.clampIntegerValues
                 ? DataHelpers.ClampToUInt8(data)
                 : (byte)data;

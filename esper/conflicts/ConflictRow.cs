@@ -50,7 +50,7 @@ namespace esper.conflicts {
         }
 
         private void AssignChildren(
-            SortedDictionary<int, Element[]> entries, 
+            SortedDictionary<int, Element[]> entries,
             int elementCount, Container container, int columnIndex
         ) {
             var childDefs = container.def.childDefs;
@@ -80,7 +80,7 @@ namespace esper.conflicts {
         }
 
         private void SortElement(
-            Element element, SortedDictionary<string, List<Element>> rows, 
+            Element element, SortedDictionary<string, List<Element>> rows,
             int numCells, int index, int repeat = 1
         ) {
             var sortKey = element.sortKey;
@@ -118,7 +118,7 @@ namespace esper.conflicts {
             }
         }
 
-        public JToken ChangesToJson(int index) {
+        internal JToken ChangesToJson(int index) {
             var changes = new JObject();
             var cell = cells[index];
             if (cell.isItm) return null;

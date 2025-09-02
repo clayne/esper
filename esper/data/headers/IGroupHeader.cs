@@ -1,5 +1,5 @@
 ﻿namespace esper.data.headers {
-    [JSExport]
+    //[JSExport]
     public interface IGroupHeader {
         public Signature signature { get; }
         public UInt32 groupSize { get; set; }

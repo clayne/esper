@@ -1,5 +1,5 @@
-﻿using esper.defs;
-using esper.data;
+﻿using esper.data;
+using esper.defs;
 
 namespace esper.elements {
     [JSExport]
@@ -7,7 +7,7 @@ namespace esper.elements {
         public MemberUnionDef unionDef => def as MemberUnionDef;
 
         public MemberUnionElement(Container container, ElementDef def, bool skipInit = false)
-            : base(container, def) {}
+            : base(container, def) { }
 
         public override void Initialize() {
             var e = unionDef.defaultDef.NewElement(this);
@@ -26,8 +26,8 @@ namespace esper.elements {
             return Remove();
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            var element = new MemberUnionElement(container, def);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            var element = new MemberUnionElement(container as Container, def);
             CopyChildrenInto(element, options);
             return element;
         }

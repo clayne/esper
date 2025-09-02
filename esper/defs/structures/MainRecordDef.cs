@@ -1,13 +1,11 @@
 using esper.data;
 using esper.elements;
 using esper.helpers;
-using esper.plugins;
+using esper.io;
 using esper.resolution;
 using esper.setup;
-using esper.io;
 
 namespace esper.defs {
-    [JSExport]
     public class MainRecordDef : MembersDef {
         public static readonly string defId = "record";
         public override string description => $"MainRecord <{signature}>";
@@ -23,20 +21,20 @@ namespace esper.defs {
         public FormIdDef containedInDef;
         internal FlagsDef recordFlagsDef;
 
-        public MainRecordDef(DefinitionManager manager, JObject src)
+        internal MainRecordDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             ErrorHelpers.CheckDefProperty(src, "signature");
             var sig = src.Value<string>("signature");
             _signature = Signature.FromString(sig);
             headerDef = BuildHeaderDef(src.Value<JObject>("flags"));
-            containedInDef = (FormIdDef) JsonHelpers.Def(manager, src, "containedInElement");
+            containedInDef = (FormIdDef)JsonHelpers.Def(manager, src, "containedInElement");
             recordFlagsDef = GetRecordFlagsDef();
         }
 
         private FlagsDef GetRecordFlagsDef() {
             foreach (var def in headerDef.elementDefs)
                 if (def.name == "Record Flags" && def is ValueDef valueDef)
-                    if (valueDef.formatDef is FlagsDef flagsDef) 
+                    if (valueDef.formatDef is FlagsDef flagsDef)
                         return flagsDef;
             return null;
         }
@@ -103,7 +101,7 @@ namespace esper.defs {
             var parentRec = GetParentRec(rec);
             var containedInDef = parentRec?.mrDef.containedInDef;
             if (containedInDef == null) return;
-            var element = (ValueElement) rec.FindElementForDef(containedInDef);
+            var element = (ValueElement)rec.FindElementForDef(containedInDef);
             element._data = FormId.FromSource(parentRec._file, parentRec.fileFormId);
         }
 
@@ -144,7 +142,7 @@ namespace esper.defs {
         }
 
         internal void UpdateDataSize(Element headerElement, UInt32 newSize) {
-            var element = (ValueElement) headerElement.GetElement("Data Size");
+            var element = (ValueElement)headerElement.GetElement("Data Size");
             element._data = newSize;
         }
 
@@ -169,10 +167,10 @@ namespace esper.defs {
         internal override void WriteElement(
             Element element, PluginFileOutput output
         ) {
-            var rec = (MainRecord) element;
+            var rec = (MainRecord)element;
             var file = rec._file;
             if (rec._internalElements == null) {
-                if (!(file as IMasterManager).mastersChanged) {
+                if (!file.mastersChanged) {
                     WriteSourceTo(rec, output);
                     return;
                 }
@@ -182,7 +180,7 @@ namespace esper.defs {
         }
 
         internal bool RecordFlagIsSet(MainRecord rec, string flag) {
-            if (recordFlagsDef == null) 
+            if (recordFlagsDef == null)
                 return rec.GetFlag(@"Record Header\Record Flags", flag);
             return recordFlagsDef.FlagIsSet(rec.header.flags, flag);
         }

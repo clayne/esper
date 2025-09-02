@@ -3,7 +3,6 @@ using esper.helpers;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class FormatUnion : FormatDef {
         public static readonly string defId = "formatUnion";
         public override XEDefType defType => XEDefType.dtIntegerFormaterUnion;
@@ -11,7 +10,7 @@ namespace esper.defs {
         public Decider decider;
         public List<FormatDef> formatDefs;
 
-        public FormatUnion(
+        internal FormatUnion(
             DefinitionManager manager, JObject src
         ) : base(manager, src) {
             decider = JsonHelpers.Decider(manager, src);
@@ -23,13 +22,13 @@ namespace esper.defs {
             return formatDefs[index];
         }
 
-        public override string DataToValue(ValueElement element, dynamic data) {
-            var resolvedDef = ResolveDef(element.container);
+        internal override string DataToValue(ValueElement element, dynamic data) {
+            var resolvedDef = ResolveDef(element.container as Container);
             return resolvedDef.DataToValue(element, data);
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
-            var resolvedDef = ResolveDef(element.container);
+        internal override dynamic ValueToData(ValueElement element, string value) {
+            var resolvedDef = ResolveDef(element.container as Container);
             return resolvedDef.ValueToData(element, value);
         }
     }

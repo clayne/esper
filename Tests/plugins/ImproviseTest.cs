@@ -84,8 +84,6 @@ namespace Tests.plugins {
 
         [Test]
         public void TestSubrecordStats() {
-            var manager = plugin as IRecordManager;
-
             /*var recordStats = new Dictionary<Signature, RecordStat>();
             foreach (var record in manager.records) {
                 var recordSig = record.signature;

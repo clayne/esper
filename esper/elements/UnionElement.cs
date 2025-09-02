@@ -6,10 +6,10 @@ namespace esper.elements {
         public UnionDef unionDef => def as UnionDef;
 
         public UnionElement(Container container, ElementDef def)
-            : base(container, def) {}
+            : base(container, def) { }
 
         public override void Initialize() {
-            var resolvedDef = unionDef.ResolveDef(container);
+            var resolvedDef = unionDef.ResolveDef(container as Container);
             var e = resolvedDef.NewElement(this);
             e.Initialize();
         }
@@ -22,8 +22,8 @@ namespace esper.elements {
             return Remove();
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            var element = new UnionElement(container, def);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            var element = new UnionElement(container as Container, def);
             CopyChildrenInto(element, options);
             return element;
         }

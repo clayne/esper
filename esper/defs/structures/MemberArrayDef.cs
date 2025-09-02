@@ -5,7 +5,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class MemberArrayDef : ElementDef {
         public static readonly string defId = "memberArray";
         public override XEDefType defType => XEDefType.dtSubRecordArray;
@@ -27,7 +26,7 @@ namespace esper.defs {
             get => new List<ElementDef>() { memberDef };
         }
 
-        public MemberArrayDef(DefinitionManager manager, JObject src)
+        internal MemberArrayDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             memberDef = JsonHelpers.ElementDef(manager, src, "member");
             counterDef = (CounterDef)JsonHelpers.Def(manager, src, "counter");

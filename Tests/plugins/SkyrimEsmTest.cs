@@ -65,7 +65,7 @@ namespace Tests.plugins {
             rec = plugin.GetRecordByFormId(0xF);
             Assert.IsNotNull(rec);
             Assert.AreEqual("Gold001", rec.editorId);
-            var records = (plugin as IRecordManager).records;
+            var records = plugin.records;
             for (int i = 0; i < records.Count; i++) {
                 rec = records[i];
                 var r2 = plugin.GetRecordByFormId(rec.fileFormId);
@@ -80,7 +80,7 @@ namespace Tests.plugins {
         public void BenchmarkRecordMap() {
             watch.Reset();
             var random = new Random();
-            var records = (plugin as IRecordManager).records;
+            var records = plugin.records;
             var n = 0;
             watch2.Start();
             while (watch2.ElapsedMilliseconds < 1000) {

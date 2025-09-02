@@ -87,7 +87,7 @@ namespace esper.setup {
                 "esu" => ModuleExtension.ESU,
                 _ => ModuleExtension.Unknown
             };
-            if (HasUnsupportedExtension) 
+            if (HasUnsupportedExtension)
                 throw new Exception("Unsupported module extension");
             if (IsAutomaticESM)
                 flags &= ModuleFlags.HasESMExtension & ModuleFlags.IsESM;

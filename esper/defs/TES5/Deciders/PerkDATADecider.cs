@@ -4,7 +4,7 @@ using esper.resolution;
 namespace esper.defs.TES5 {
     public class PerkDATADecider : Decider {
         public override int Decide(Container container) {
-            var type = container.GetData(@"PRKE\Type");
+            var type = container.GetData<int?>(@"PRKE\Type");
             return type ?? 0;
         }
     }

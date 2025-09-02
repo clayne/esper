@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 namespace esper.elements {
     [JSExport]
     public class StructElement : Container {
-        public StructDef structDef => (StructDef) def;
+        public StructDef structDef => (StructDef)def;
 
         public override ReadOnlyCollection<Element> elements {
             get {
@@ -16,7 +16,7 @@ namespace esper.elements {
         }
 
         public StructElement(Container container, ElementDef def)
-            : base(container, def) {}
+            : base(container, def) { }
 
         public override void Initialize() {
             structDef.InitChildElements(this);
@@ -39,8 +39,8 @@ namespace esper.elements {
             return false;
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            var element = new StructElement(container, def);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            var element = new StructElement(container as Container, def);
             CopyChildrenInto(element, options);
             return element;
         }

@@ -1,7 +1,6 @@
 ﻿using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class CTDAFunction : Def {
         public static readonly string defId = "ctdaFunction";
 
@@ -11,7 +10,7 @@ namespace esper.defs {
         public CTDAFunctionParamType? paramType2;
         public CTDAFunctionParamType? paramType3;
 
-        public CTDAFunction(DefinitionManager manager, JObject src)
+        internal CTDAFunction(DefinitionManager manager, JObject src)
             : base(manager, src) {
             index = src.Value<UInt16>("index");
             name = src.Value<string>("name");
@@ -23,8 +22,8 @@ namespace esper.defs {
         private CTDAFunctionParamType? ParseParamType(JObject src, string key) {
             var value = src.Value<string>(key);
             if (value == null) return null;
-            return (CTDAFunctionParamType) Enum.Parse(
-                typeof(CTDAFunctionParamType), 
+            return (CTDAFunctionParamType)Enum.Parse(
+                typeof(CTDAFunctionParamType),
                 value
             );
         }

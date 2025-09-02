@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.IO;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 
 namespace esper.helpers {
     public static class IOHelpers {

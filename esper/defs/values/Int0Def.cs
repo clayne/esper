@@ -3,7 +3,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class Int0Def : ValueDef {
         public static readonly string defId = "int0";
         public override XEDefType valueDefType => XEDefType.dtInteger;
@@ -11,14 +10,14 @@ namespace esper.defs {
 
         public override int? size => 0;
 
-        public Int0Def(DefinitionManager manager, JObject src)
+        internal Int0Def(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             return null;
         }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return null;
         }
 

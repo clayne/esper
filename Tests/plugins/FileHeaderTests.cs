@@ -40,15 +40,15 @@ namespace Tests.plugins {
         public void TestRecordHeaderData() {
             var fileHeader = plugin.header;
             var rh = fileHeader.GetElement("Record Header");
-            Assert.AreEqual("TES4", rh.GetData("Signature"));
-            Assert.AreEqual(113, rh.GetData("Data Size"));
-            Assert.AreEqual(0, rh.GetData("Record Flags"));
-            FormId formId = rh.GetData("FormID");
+            Assert.AreEqual("TES4", rh.GetData<string>("Signature"));
+            Assert.AreEqual(113, rh.GetData<uint>("Data Size"));
+            Assert.AreEqual(0, rh.GetData<uint>("Record Flags"));
+            FormId formId = rh.GetData<FormId>("FormID");
             Assert.AreEqual(formId.localFormId, 0);
-            byte[] vc1 = rh.GetData("Version Control Info 1");
+            byte[] vc1 = rh.GetData<byte[]>("Version Control Info 1");
             Assert.AreEqual(vc1[0], 0);
-            Assert.AreEqual(44, rh.GetData("Form Version"));
-            byte[] vc2 = rh.GetData("Version Control Info 2");
+            Assert.AreEqual(44, rh.GetData<int>("Form Version"));
+            byte[] vc2 = rh.GetData<byte[]>("Version Control Info 2");
             Assert.AreEqual(vc2[0], 0);
         }
 

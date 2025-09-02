@@ -1,6 +1,6 @@
 ﻿using esper.elements;
-using esper.plugins;
 using esper.io;
+using esper.plugins;
 
 namespace esper.data {
     [JSExport]
@@ -52,8 +52,8 @@ namespace esper.data {
         internal void WriteTo(PluginFileOutput output) {
             byte ordinal = targetPlugin != null
                 ? output.plugin.FileToOrdinal(targetPlugin, true)
-                : (byte) 0;
-            fileFormId = ((UInt32) ordinal << 24) + localFormId;
+                : (byte)0;
+            fileFormId = ((UInt32)ordinal << 24) + localFormId;
             output.writer.Write(fileFormId);
         }
     }

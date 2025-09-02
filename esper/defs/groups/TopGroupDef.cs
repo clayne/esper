@@ -3,7 +3,6 @@ using esper.elements;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class TopGroupDef : GroupDef {
         private readonly Signature _signature;
 
@@ -16,7 +15,7 @@ namespace esper.defs {
 
         public MainRecordDef recordDef { get; }
 
-        public TopGroupDef(DefinitionManager manager, JObject src)
+        internal TopGroupDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             var sig = src.Value<string>("signature");
             _signature = Signature.FromString(sig);
@@ -26,7 +25,7 @@ namespace esper.defs {
             if (recordDef != null) childrenDefs.Add(recordDef);
         }
 
-        public override dynamic ConvertLabel(GroupRecord group, byte[] label) {
+        internal override dynamic ConvertLabel(GroupRecord group, byte[] label) {
             return new Signature(label);
         }
 

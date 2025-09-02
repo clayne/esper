@@ -1,8 +1,5 @@
 ﻿using esper.elements;
 using esper.setup;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Text.RegularExpressions;
 
 namespace esper.defs.TES5 {
     public class TimeFormat : FormatDef {
@@ -12,10 +9,10 @@ namespace esper.defs.TES5 {
 
         public static readonly string defId = "ClmtTimeFormat";
 
-        public TimeFormat(DefinitionManager manager, JObject src)
-            : base(manager, src) {}
+        internal TimeFormat(DefinitionManager manager, JObject src)
+            : base(manager, src) { }
 
-        public override string DataToValue(ValueElement element, dynamic data) {
+        internal override string DataToValue(ValueElement element, dynamic data) {
             Int64 time = data;
             var hours = time / 6;
             var minutes = (time % 6) * 10;
@@ -23,13 +20,13 @@ namespace esper.defs.TES5 {
             return $"{hours:00}:{minutes:00}";
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
+        internal override dynamic ValueToData(ValueElement element, string value) {
             var match = timeExpr.Match(value);
             if (match == null) return 0;
             var hours = int.Parse(match.Groups[1].Value);
             var minutes = int.Parse(match.Groups[2].Value);
             var time = (hours * 6) + (minutes / 10);
-            return (byte) time;
+            return (byte)time;
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using esper.elements;
-using esper.setup;
+﻿using esper.data;
+using esper.elements;
 using esper.io;
-using esper.data;
+using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class MemberUnionDef : MembersDef {
         public static readonly string defId = "memberUnion";
         public override XEDefType defType => XEDefType.dtSubRecordUnion;
@@ -12,8 +11,8 @@ namespace esper.defs {
 
         public ElementDef defaultDef => memberDefs[0];
 
-        public MemberUnionDef(DefinitionManager manager, JObject src)
-            : base(manager, src) {}
+        internal MemberUnionDef(DefinitionManager manager, JObject src)
+            : base(manager, src) { }
 
         public override Element PrepareElement(Container container) {
             if (defaultDef.IsSubrecord()) return container;
@@ -47,12 +46,12 @@ namespace esper.defs {
         }
 
         public override bool HasSignature(Signature sig) {
-            return defaultDef.IsSubrecord() && 
+            return defaultDef.IsSubrecord() &&
                 memberDefs.Any(d => d.HasSignature(sig));
         }
 
         public override string GetSortKey(Element element) {
-            var container = (Container) element;
+            var container = (Container)element;
             return container._internalElements[0].sortKey;
         }
 

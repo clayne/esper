@@ -1,10 +1,8 @@
 ﻿using esper.data;
 using esper.elements;
 using esper.plugins;
-using System;
-using System.IO;
-using System.IO.MemoryMappedFiles;
 using Ionic.Zlib;
+using System.IO.MemoryMappedFiles;
 
 namespace esper.io {
     public class PluginFileSource : DataSource {
@@ -26,11 +24,11 @@ namespace esper.io {
             fileInfo = new FileInfo(filePath);
             plugin.source = this;
             var baseStream = new FileStream(
-                filePath, FileMode.Open, 
+                filePath, FileMode.Open,
                 FileAccess.Read, FileShare.ReadWrite
             );
             file = MemoryMappedFile.CreateFromFile(
-                baseStream, null, 0, MemoryMappedFileAccess.Read, 
+                baseStream, null, 0, MemoryMappedFileAccess.Read,
                 HandleInheritability.None, false
             );
             fileStream = file.CreateViewStream(
@@ -43,7 +41,7 @@ namespace esper.io {
             var decompressedDataSize = reader.ReadUInt32();
             var zstream = new ZlibStream(fileStream, CompressionMode.Decompress);
             var zreader = new BinaryReader(zstream);
-            return zreader.ReadBytes((int) decompressedDataSize);
+            return zreader.ReadBytes((int)decompressedDataSize);
         }
 
         internal void PipeTo(BinaryWriter writer, int size) {

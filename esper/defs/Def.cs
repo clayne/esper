@@ -1,7 +1,7 @@
 ﻿using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
+    //[JSExport]
     public class Def {
         internal DefinitionManager manager;
 
@@ -9,7 +9,9 @@ namespace esper.defs {
         public virtual string description => throw new NotImplementedException();
         public virtual XEDefType defType => throw new NotImplementedException();
 
-        public Def(DefinitionManager manager, JObject src) {
+        public Def() { }
+
+        internal Def(DefinitionManager manager, JObject src) {
             this.manager = manager;
         }
 

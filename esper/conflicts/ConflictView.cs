@@ -12,7 +12,7 @@ namespace esper.conflicts {
             row = new ConflictRow(records);
         }
 
-        public JToken ChangesToJson(MainRecord rec) {
+        internal JToken ChangesToJson(MainRecord rec) {
             var targetIndex = row.cells.FindIndex(cell => cell.element == rec);
             return row.ChangesToJson(targetIndex);
         }

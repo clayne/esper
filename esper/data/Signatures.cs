@@ -1,5 +1,5 @@
 ﻿namespace esper.data {
-    [JSExport]
+    //[JSExport]
     public static class Signatures {
         public static readonly Signature None = new Signature(0);
         public static readonly Signature GRUP = Signature.FromString("GRUP");

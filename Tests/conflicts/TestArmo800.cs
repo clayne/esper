@@ -29,7 +29,7 @@ namespace Tests.conflicts {
             Assert.AreEqual(pluginManager.plugins[0].name, "ConflictTest.esp");
             Assert.AreEqual(pluginManager.plugins[1].name, "ConflictTest2.esp");
             Assert.AreEqual(pluginManager.plugins[2].name, "ConflictTest3.esp");
-            var plugin1 = pluginManager.plugins[0] as IRecordManager;
+            var plugin1 = pluginManager.plugins[0];
             view1 = new ConflictView(plugin1.GetRecordByFormId(0x800));
             Helpers.ExportConflicts(view1, "0x800.json");
         }

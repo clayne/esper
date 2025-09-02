@@ -2,14 +2,13 @@
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class InteriorCellGroupDef : GroupDef {
         internal virtual Regex nameExpr => throw new NotImplementedException();
 
-        public InteriorCellGroupDef(DefinitionManager manager, JObject src)
+        internal InteriorCellGroupDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
-        public override dynamic ConvertLabel(GroupRecord group, byte[] label) {
+        internal override dynamic ConvertLabel(GroupRecord group, byte[] label) {
             return BitConverter.ToInt32(label);
         }
 
@@ -24,14 +23,13 @@ namespace esper.defs {
         }
     }
 
-    [JSExport]
     public class InteriorCellBlockDef : InteriorCellGroupDef {
         internal override Regex nameExpr => new Regex(@"^Block (\-?\d+)$");
 
         public static int defGroupType = 2;
         public override int groupType => 2;
 
-        public InteriorCellBlockDef(DefinitionManager manager, JObject src)
+        internal InteriorCellBlockDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override string GetName(GroupRecord group) {
@@ -39,14 +37,13 @@ namespace esper.defs {
         }
     }
 
-    [JSExport]
     public class InteriorCellSubBlockDef : InteriorCellGroupDef {
         internal override Regex nameExpr => new Regex(@"^Sub-Block (\-?\d+)$");
 
         public static int defGroupType = 3;
         public override int groupType => 3;
 
-        public InteriorCellSubBlockDef(DefinitionManager manager, JObject src)
+        internal InteriorCellSubBlockDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override string GetName(GroupRecord group) {

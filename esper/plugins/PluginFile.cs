@@ -1,14 +1,14 @@
-﻿using esper.setup;
-using esper.elements;
-using esper.resolution;
-using esper.io;
-using esper.defs;
+﻿using balsa.stringtables;
 using esper.data;
-using balsa.stringtables;
+using esper.defs;
+using esper.elements;
+using esper.io;
+using esper.resolution;
+using esper.setup;
 
 namespace esper.plugins {
     [JSExport]
-    public class PluginFile : Container, IMasterManager, IRecordManager {
+    public class PluginFile : Container {
         public MainRecord header;
         internal Session session;
         internal string filename;
@@ -19,15 +19,13 @@ namespace esper.plugins {
 
         public PluginFileDef pluginDef => (PluginFileDef)def;
         public bool isDummy => source == null;
-        public uint recordCount => header.GetData(@"HEDR\Number of Records");
+        public uint recordCount => header.GetData<uint>(@"HEDR\Number of Records");
 
-        PluginFile IMasterManager.file => this;
-        ReadOnlyMasterList IMasterManager.originalMasters { get; set; }
-        MasterList IMasterManager.masters { get; set; }
-        bool IMasterManager.mastersChanged { get; set; }
+        public ReadOnlyMasterList originalMasters { get; set; }
+        public MasterList masters { get; set; }
+        public bool mastersChanged { get; set; }
 
-        PluginFile IRecordManager.file => this;
-        List<MainRecord> IRecordManager.records { get; set; }
+        public List<MainRecord> records { get; set; }
 
         public override PluginFile file => this;
         public override string name => filename;
@@ -66,9 +64,9 @@ namespace esper.plugins {
         internal StringFileType GetStringFileType(Element element) {
             var elementSig = element.signature;
             var recordSig = element.record.signature;
-            if (UseDLStrings(recordSig, elementSig)) 
+            if (UseDLStrings(recordSig, elementSig))
                 return StringFileType.DLSTRINGS;
-            if (UseILStrings(recordSig, elementSig)) 
+            if (UseILStrings(recordSig, elementSig))
                 return StringFileType.ILSTRINGS;
             return StringFileType.STRINGS;
         }
@@ -90,12 +88,11 @@ namespace esper.plugins {
         }
 
         public override void BuildRefBy() {
-            IRecordManager m = this;
-            foreach (var rec in m.records)
+            foreach (var rec in records)
                 rec.BuildRefBy();
         }
 
-        public override JToken ToJson() {
+        internal override JToken ToJson() {
             var o = new JObject {
                 { "Filename", filename },
                 { "File Header", header.ToJson() }

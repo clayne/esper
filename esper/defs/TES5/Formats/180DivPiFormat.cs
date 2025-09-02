@@ -1,17 +1,15 @@
 ﻿using esper.elements;
 using esper.setup;
-using Newtonsoft.Json.Linq;
-using System;
 
 namespace esper.defs.TES5 {
     public class _180DivPiFormat : FormatDef {
         public static readonly string defId = "180DivPiFormat";
         public override bool isNumeric => true;
 
-        public _180DivPiFormat(DefinitionManager manager, JObject src)
+        internal _180DivPiFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
-        public override string DataToValue(ValueElement element, dynamic data) {
+        internal override string DataToValue(ValueElement element, dynamic data) {
             if (Single.IsNaN(data)) return "NaN";
             if (Single.IsInfinity(data)) return "Inf";
             if (data == Single.MaxValue) return "Default";
@@ -20,7 +18,7 @@ namespace esper.defs.TES5 {
             return fData.ToString(sessionOptions.floatFormat);
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
+        internal override dynamic ValueToData(ValueElement element, string value) {
             // TODO
             throw new NotImplementedException();
         }

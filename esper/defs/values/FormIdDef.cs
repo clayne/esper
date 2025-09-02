@@ -6,7 +6,6 @@ using esper.resolution;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class FormIdDef : ValueDef {
         public static readonly string defId = "formId";
         public override XEDefType valueDefType => XEDefType.dtIntegerFormater;
@@ -19,7 +18,7 @@ namespace esper.defs {
         public override int? size => 4;
         public override bool canContainFormIds => true;
 
-        public FormIdDef(DefinitionManager manager, JObject src)
+        internal FormIdDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             if (src.ContainsKey("signatures"))
                 allowedSignatures = JsonHelpers.SignaturesDef(manager, src);
@@ -29,12 +28,12 @@ namespace esper.defs {
                 persistent = src.Value<bool>("persistent");
         }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             UInt32 data = source.reader.ReadUInt32();
             return FormId.FromSource(source.plugin, data);
         }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return new FormId(null, 0);
         }
 
@@ -46,7 +45,7 @@ namespace esper.defs {
         internal void ValidateFormListRefs(ValueElement element, MainRecord rec) {
             var formIdElements = rec.GetElements("FormIDs");
             if (formIdElements == null) return;
-            foreach (ValueElement v in formIdElements) { 
+            foreach (ValueElement v in formIdElements) {
                 var fid = v?.data as FormId;
                 var entryRec = fid?.ResolveRecord();
                 if (entryRec == null) continue;
@@ -82,7 +81,7 @@ namespace esper.defs {
             SetData(element, fid);
         }
 
-        public override string DataToSortKey(dynamic data) {
+        internal override string DataToSortKey(dynamic data) {
             var fid = (FormId)data;
             if (fid == null) return new string('0', 8);
             return fid.fileFormId.ToString("X8");

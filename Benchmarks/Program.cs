@@ -52,9 +52,8 @@ namespace Benchmarks {
         }
 
         public void BuildReferencedBy() {
-            IRecordManager m = plugin;
             var groupedRecords = new Dictionary<Signature, List<MainRecord>>();
-            foreach (var record in m.records) {
+            foreach (var record in plugin.records) {
                 var sig = record.signature;
                 if (sig.ToString() == "NAVM") continue;
                 if (!groupedRecords.ContainsKey(sig))

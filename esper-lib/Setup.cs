@@ -4,7 +4,7 @@ using esper.setup;
 using Microsoft.JavaScript.NodeApi;
 
 namespace esper_lib {
-    [JSExport]
+    //[JSExport]
     public static class Setup {
         private static readonly SessionOptions options = new SessionOptions();
 
@@ -22,7 +22,7 @@ namespace esper_lib {
         }
 
         // PUBLIC API
-        [JSExport]
+        //[JSExport]
         public static string GetGamePath(int gameMode) {
             try {
                 Game game = GetGame(gameMode);
@@ -32,7 +32,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void SetGamePath(string path) {
             try {
                 options.gamePath = path;
@@ -41,7 +41,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static string GetGameLanguage() {
             try {
                 return Meta.session.gameIni.GetConfiguredLanguage();
@@ -50,7 +50,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void SetLanguage(string language) {
             try {
                 options.language = language;
@@ -59,7 +59,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void SetGameMode(int gameMode) {
             try {
                 Meta.session = new Session(GetGame(gameMode), options);
@@ -68,7 +68,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static string GetLoadOrder() {
             try {
                 var loadOrder = new LoadOrder(Meta.session);
@@ -78,7 +78,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void LoadPlugins(string loadOrder, bool smartLoad) {
             try {
                 LoaderThread.Run(loadOrder, smartLoad);
@@ -87,7 +87,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void LoadPlugin(string filename) {
             try {
                 LoaderThread.Run(filename, false);
@@ -96,7 +96,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static uint LoadPluginHeader(string filename) {
             try {
                 var file = Meta.session.pluginManager.LoadPluginHeader(filename);
@@ -106,7 +106,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static void BuildReferences(uint id, bool sync) {
             try {
                 RefThread.Run(id, sync);
@@ -115,7 +115,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static bool UnloadPlugin(uint id) {
             try {
                 PluginFile plugin = (PluginFile) Meta.Resolve(id);
@@ -126,7 +126,7 @@ namespace esper_lib {
             }
         }
 
-        [JSExport]
+        //[JSExport]
         public static byte GetLoaderStatus() {
             try {
                 return (byte)Meta.loaderState;

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 namespace esper.elements {
     [JSExport]
     public class ArrayElement : Container {
-        public ArrayDef arrayDef => (ArrayDef) def;
+        public ArrayDef arrayDef => (ArrayDef)def;
 
         public override ReadOnlyCollection<Element> elements {
             get {
@@ -16,7 +16,7 @@ namespace esper.elements {
         }
 
         public ArrayElement(Container container, ElementDef def)
-            : base(container, def) {}
+            : base(container, def) { }
 
         public override void Initialize() {
             var e = arrayDef.elementDef.NewElement(this);
@@ -26,8 +26,8 @@ namespace esper.elements {
         internal override AssignmentInfo GetAssignment(ElementDef childDef) {
             if (childDef != arrayDef.elementDef)
                 throw new Exception($"Element {childDef.name} is not supported.");
-            return new AssignmentInfo() { 
-                index = internalElements.Count 
+            return new AssignmentInfo() {
+                index = internalElements.Count
             };
         }
 
@@ -42,13 +42,13 @@ namespace esper.elements {
             return true;
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            var element = new ArrayElement(container, def);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            var element = new ArrayElement(container as Container, def);
             CopyChildrenInto(element, options);
             return element;
         }
 
-        public override JToken ToJson() {
+        internal override JToken ToJson() {
             return ToJsonArray();
         }
     }

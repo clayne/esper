@@ -1,5 +1,4 @@
 ﻿using esper.setup;
-using Newtonsoft.Json.Linq;
 
 namespace esper.defs.TES5 {
     public class ScriptFragmentsQuestCounter : ElementCounter {
@@ -7,8 +6,8 @@ namespace esper.defs.TES5 {
 
         public override string path => "FragmentCount";
 
-        public ScriptFragmentsQuestCounter(
+        internal ScriptFragmentsQuestCounter(
             DefinitionManager manager, JObject src
-        ) : base(manager, src) {}
+        ) : base(manager, src) { }
     }
 }

@@ -1,13 +1,13 @@
-﻿using esper.defs;
-using esper.data;
+﻿using esper.data;
+using esper.defs;
 
 namespace esper.elements {
     [JSExport]
     public class MemberStructElement : Container {
-        public MemberStructDef msDef => (MemberStructDef) def;
+        public MemberStructDef msDef => (MemberStructDef)def;
 
         public MemberStructElement(Container container, ElementDef def)
-            : base(container, def) {}
+            : base(container, def) { }
 
         public override void Initialize() {
             msDef.InitChildElements(this);
@@ -30,8 +30,8 @@ namespace esper.elements {
             return info;
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            var element = new MemberStructElement(container, def);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            var element = new MemberStructElement(container as Container, def);
             CopyChildrenInto(element, options);
             return element;
         }

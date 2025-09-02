@@ -8,7 +8,7 @@ namespace esper.setup {
 
         public LightPluginSlot(PluginFile plugin, int index)
             : base(plugin) {
-            this.index = (UInt16) index;
+            this.index = (UInt16)index;
         }
 
         public override UInt32 GetOrdinal() {

@@ -1,9 +1,9 @@
 ﻿using esper.elements;
-using esper.plugins;
 using esper.io;
+using esper.plugins;
 
 namespace esper.data {
-    [JSExport]
+    //[JSExport]
     public class LocalizedString {
         public PluginFile plugin;
         public UInt32 id;

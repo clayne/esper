@@ -1,6 +1,4 @@
-﻿using esper.plugins;
-
-namespace esper.setup {
+﻿namespace esper.setup {
     [JSExport]
     public class LoadOrder {
         private static readonly Regex validFileNameExpr = new Regex(
@@ -70,8 +68,7 @@ namespace esper.setup {
 
         private void ProcessMasters() {
             foreach (var module in modules) {
-                var masterManager = (IMasterManager)module.plugin;
-                foreach (var masterName in masterManager.masters.filenames)
+                foreach (var masterName in module.plugin.masters.filenames)
                     AppendMaster(module, masterName);
             }
             PropagateMissingMasters(modules);

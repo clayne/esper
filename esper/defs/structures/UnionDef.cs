@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class UnionDef : MaybeSubrecordDef {
         public static readonly string defId = "union";
         public override XEDefType defType => XEDefType.dtUnion;
@@ -17,7 +16,7 @@ namespace esper.defs {
         public override bool canContainFormIds => _canContainFormIds;
         public override List<ElementDef> childDefs => elementDefs;
 
-        public UnionDef(DefinitionManager manager, JObject src) 
+        internal UnionDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             elementDefs = JsonHelpers.Defs<ElementDef>(manager, src, "elements");
             decider = JsonHelpers.Decider(manager, src);
@@ -55,7 +54,7 @@ namespace esper.defs {
             Element element, PluginFileOutput output
         ) {
             base.WriteElement(element, output);
-            output.WriteContainer((Container) element);
+            output.WriteContainer((Container)element);
         }
     }
 }

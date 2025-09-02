@@ -9,7 +9,7 @@ using esper.setup;
 namespace esper.defs {
     using TopGroupsMap = Dictionary<Signature, GroupDef>;
 
-    [JSExport]
+    //[JSExport]
     public class PluginFileDef : ElementDef {
         public static string defId = "pluginFile";
 
@@ -18,7 +18,7 @@ namespace esper.defs {
 
         public override List<ElementDef> childDefs => childrenDefs;
 
-        public PluginFileDef(DefinitionManager manager, JObject src)
+        internal PluginFileDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             childrenDefs = JsonHelpers.Defs<ElementDef>(manager, src, "children");
             topGroups = BuildTopGroupsMap();

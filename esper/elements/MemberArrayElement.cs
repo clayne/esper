@@ -1,5 +1,5 @@
-﻿using esper.defs;
-using esper.data;
+﻿using esper.data;
+using esper.defs;
 using System.Collections.ObjectModel;
 
 namespace esper.elements {
@@ -17,7 +17,7 @@ namespace esper.elements {
         }
 
         public MemberArrayElement(Container container, ElementDef def)
-            : base(container, def) {}
+            : base(container, def) { }
 
         public override void Initialize() {
             var e = maDef.memberDef.NewElement(this);
@@ -47,13 +47,13 @@ namespace esper.elements {
             return true;
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            var element = new MemberArrayElement(container, def);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            var element = new MemberArrayElement(container as Container, def);
             CopyChildrenInto(element, options);
             return element;
         }
 
-        public override JToken ToJson() {
+        internal override JToken ToJson() {
             return ToJsonArray();
         }
     }

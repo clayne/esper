@@ -1,5 +1,5 @@
 ﻿namespace esper.defs {
-    [JSExport]
+    //[JSExport]
     public enum ConflictType : byte {
         Ignore,
         BenignIfAdded,

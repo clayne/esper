@@ -7,7 +7,7 @@
             fullName = "The Elder Scrolls IV: Oblivion",
             abbreviation = "TES4",
             steamAppIds = { 22330, 900883 }
-        }.InitDefaults(); 
+        }.InitDefaults();
 
         public static Game FO3 = new Game {
             xeditId = 2,
@@ -45,7 +45,7 @@
             pluginsTxtType = PluginsTxtType.Asterisk,
             archiveExtension = ".ba2",
             extendedArchiveMatching = true,
-            pluginExtensions = { 
+            pluginExtensions = {
                 ModuleExtension.ESL,
                 ModuleExtension.ESP,
                 ModuleExtension.ESM
@@ -71,7 +71,7 @@
             cccName = "Skyrim.ccc",
             pluginsTxtType = PluginsTxtType.Asterisk,
             extendedArchiveMatching = true,
-            pluginExtensions = { 
+            pluginExtensions = {
                 ModuleExtension.ESL,
                 ModuleExtension.ESP,
                 ModuleExtension.ESM

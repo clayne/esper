@@ -2,16 +2,16 @@
 using esper.defs;
 using esper.io;
 using esper.plugins;
-using esper.resolution;
 using esper.setup;
+using System.Collections.ObjectModel;
 
 namespace esper.elements {
     [JSExport]
-    public class Element : IResolution {
+    public class Element {
         public readonly ElementDef def;
         public ElementState state;
 
-        public virtual Container container { get; internal set; }
+        public virtual Element container { get; internal set; }
         public virtual DefinitionManager manager => file.manager;
         public virtual string sortKey => def.GetSortKey(this);
         public virtual string name => def.name;
@@ -21,6 +21,14 @@ namespace esper.elements {
         public SessionOptions sessionOptions => manager.session.options;
         public Game game => manager.session.game;
         public virtual int index => container.elements.IndexOf(this);
+
+        internal virtual List<Element> internalElements {
+            get => throw new Exception("Element is not a container.");
+        }
+
+        public virtual ReadOnlyCollection<Element> elements {
+            get => throw new Exception("Element is not a container.");
+        }
 
         public virtual MainRecord referencedRecord {
             get => throw new Exception("Element does not reference records.");
@@ -81,14 +89,18 @@ namespace esper.elements {
             }
         }
 
-        public Element(Container container = null, ElementDef def = null) {
+        public Element(Element container = null, ElementDef def = null) {
             this.def = def;
             this.container = container;
             if (container == null) return;
             container.internalElements.Add(this);
         }
 
-        public virtual void Initialize() {}
+        internal virtual void InternalAdd(Element element) {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Initialize() { }
 
         public void SetState(ElementState state) {
             this.state |= state;
@@ -114,14 +126,14 @@ namespace esper.elements {
 
         public virtual bool Remove() {
             if (def.required) return false;
-            return container.RemoveElement(this);
+            return (container as Container).RemoveElement(this);
         }
 
-        internal virtual Element ResolveIn(Container container) {
+        internal virtual Element ResolveIn(Element container) {
             throw new NotImplementedException();
         }
 
-        internal virtual Element CopyInto(Container container, CopyOptions options) {
+        internal virtual Element CopyInto(Element container, CopyOptions options) {
             throw new NotImplementedException();
         }
 
@@ -129,12 +141,12 @@ namespace esper.elements {
             throw new NotImplementedException();
         }
 
-        public virtual JToken ToJson() {
+        internal virtual JToken ToJson() {
             throw new NotImplementedException();
         }
 
         internal Container ForceContainer(
-            Container source, Container target, CopyOptions options, ref bool creating
+            Element source, Element target, CopyOptions options, ref bool creating
         ) {
             if (!creating) {
                 var child = source.ResolveIn(target);
@@ -143,16 +155,16 @@ namespace esper.elements {
             }
             return (Container)source.CopyInto(target, options);
         }
-        
-        public virtual Container ForceContainers(Element element, CopyOptions options) {
-            var parentContainers = new List<Container>();
+
+        public virtual Element ForceContainers(Element element, CopyOptions options) {
+            var parentContainers = new List<Element>();
             var targetContainer = element.container;
             while (targetContainer != null) {
                 if (def == targetContainer.def) break;
                 parentContainers.Add(targetContainer);
                 targetContainer = targetContainer.container;
             }
-            if (targetContainer == null) 
+            if (targetContainer == null)
                 throw new Exception($"{element.def.description} is not supported by {def.description}");
             bool creating = false;
             var ccOptions = options ^ CopyOptions.CopyChildGroups;

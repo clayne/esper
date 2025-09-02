@@ -1,7 +1,7 @@
 ﻿namespace esper {
-    [JSExport]
+    //[JSExport]
     public class SignatureEncoding {
-        public SignatureEncoding() {}
+        public SignatureEncoding() { }
 
         public byte[] Encode(string str) {
             byte[] bytes = new byte[4];

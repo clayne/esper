@@ -12,7 +12,7 @@ namespace esper.elements {
             get {
                 var formatDef = this.formatDef;
                 if (formatDef is FormatUnion u)
-                    formatDef = u.ResolveDef(container);
+                    formatDef = u.ResolveDef(container as Container);
                 if (formatDef is FlagsDef f) return f;
                 return null;
             }
@@ -20,7 +20,7 @@ namespace esper.elements {
 
         internal dynamic _data;
 
-        public dynamic data {
+        internal dynamic data {
             get => _data;
             set => valueDef.SetData(this, value);
         }
@@ -36,7 +36,7 @@ namespace esper.elements {
             get {
                 if (valueDef is FormIdDef) {
                     return data is FormId fid
-                        ? fid.ResolveRecord() 
+                        ? fid.ResolveRecord()
                         : null;
                 }
                 return base.referencedRecord;
@@ -46,7 +46,7 @@ namespace esper.elements {
             }
         }
 
-        public static ValueElement Init(
+        internal static ValueElement Init(
             Container container, ElementDef def, dynamic data
         ) {
             return new ValueElement(container, def) {
@@ -55,7 +55,7 @@ namespace esper.elements {
         }
 
         public ValueElement(Container container, ElementDef def)
-            : base(container, def) {}
+            : base(container, def) { }
 
         public override void Initialize() {
             data = valueDef.DefaultData();
@@ -65,8 +65,8 @@ namespace esper.elements {
             valueDef.WriteElement(this, output);
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            return ValueElement.Init(container, def, _data);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            return ValueElement.Init(container as Container, def, _data);
         }
 
         public override void BuildRefBy() {
@@ -74,7 +74,7 @@ namespace esper.elements {
             if (rec != null) rec.AddRef(record);
         }
 
-        public override JToken ToJson() {
+        internal override JToken ToJson() {
             if (sessionOptions.serializeNumericData && valueDef.isNumeric)
                 return data;
             return value;

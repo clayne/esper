@@ -2,16 +2,15 @@
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class ExteriorCellGroupDef : GroupDef {
         internal virtual Regex nameExpr => throw new NotImplementedException();
         public override bool hasRecordParent => true;
         public override bool isChildGroupChild => true;
 
-        public ExteriorCellGroupDef(DefinitionManager manager, JObject src)
+        internal ExteriorCellGroupDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
-        public override dynamic ConvertLabel(GroupRecord group, byte[] label) {
+        internal override dynamic ConvertLabel(GroupRecord group, byte[] label) {
             return new Int16[2] {
                 BitConverter.ToInt16(label),
                 BitConverter.ToInt16(label, 2)
@@ -38,14 +37,14 @@ namespace esper.defs {
         }
     }
 
-    [JSExport]
+    //[JSExport]
     public class ExteriorCellBlockDef : ExteriorCellGroupDef {
         internal override Regex nameExpr => new Regex(@"^Block (\-?\d+), (\-\d+)$");
 
         public static int defGroupType = 4;
         public override int groupType => 4;
 
-        public ExteriorCellBlockDef(DefinitionManager manager, JObject src)
+        internal ExteriorCellBlockDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override string GetName(GroupRecord group) {
@@ -53,14 +52,14 @@ namespace esper.defs {
         }
     }
 
-    [JSExport]
+    //[JSExport]
     public class ExteriorCellSubBlockDef : ExteriorCellGroupDef {
         internal override Regex nameExpr => new Regex(@"^Sub-Block (\-?\d+), (\-\d+)$");
 
         public static int defGroupType = 5;
         public override int groupType => 5;
 
-        public ExteriorCellSubBlockDef(DefinitionManager manager, JObject src)
+        internal ExteriorCellSubBlockDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         public override string GetName(GroupRecord group) {

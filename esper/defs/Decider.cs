@@ -1,7 +1,7 @@
 ﻿using esper.elements;
 
 namespace esper.defs {
-    [JSExport]
+    //[JSExport]
     public class Decider {
         public virtual int Decide(Container container) {
             throw new NotImplementedException();

@@ -3,7 +3,7 @@ using esper.helpers;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
+    //[JSExport]
     public class MembersDef : ElementDef {
         private readonly bool _canContainFormIds;
 
@@ -12,7 +12,7 @@ namespace esper.defs {
         public override bool canContainFormIds => _canContainFormIds;
         public override List<ElementDef> childDefs => memberDefs;
 
-        public MembersDef(DefinitionManager manager, JObject src)
+        internal MembersDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             memberDefs = JsonHelpers.Defs<ElementDef>(manager, src, "members");
             signatures = GetSignatures();

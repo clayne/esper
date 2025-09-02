@@ -1,5 +1,5 @@
-﻿using esper.defs;
-using esper.data;
+﻿using esper.data;
+using esper.defs;
 
 namespace esper.elements {
     [JSExport]
@@ -8,7 +8,7 @@ namespace esper.elements {
 
         public override Signature signature => unionDef.signature;
         public override string name => unionDef.name;
-        public override string displayName => signature != null
+        public override string displayName => signature != Signatures.None
             ? $"{signature} - {name}"
             : name;
 
@@ -18,8 +18,8 @@ namespace esper.elements {
             this.unionDef = unionDef;
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            return new UnionValueElement(container, def, unionDef) {
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            return new UnionValueElement(container as Container, def, unionDef) {
                 _data = this._data
             };
         }

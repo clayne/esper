@@ -1,11 +1,10 @@
 ﻿using esper.elements;
 using esper.resolution;
-using System;
 
 namespace esper.defs.TES5 {
     public class CTDAParam1Decider : Decider {
         protected CTDAFunction GetCTDAFunction(Container container) {
-            UInt16 index = container.GetData("Function");
+            UInt16 index = container.GetData<UInt16>("Function");
             var ctdaFunctions = container.manager.ctdaFunctions;
             return ctdaFunctions.FunctionByIndex(index);
         }
@@ -19,7 +18,7 @@ namespace esper.defs.TES5 {
         protected CTDAFunctionParamType? ResolveParamType(
             Container container, CTDAFunction ctdaFunction
         ) {
-            long paramFlag = container.GetData("Type");
+            long paramFlag = container.GetData<int>("Type");
             var paramType = GetParamType(ctdaFunction);
             switch (paramType) {
                 case CTDAFunctionParamType.ptObjectReference:

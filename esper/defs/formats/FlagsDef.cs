@@ -4,16 +4,15 @@ using esper.setup;
 using System.Text;
 
 namespace esper.defs {
-    [JSExport]
     public class FlagsDef : FormatDef {
-        public static Regex unknownFlagExpr = new Regex(@"^Unknown (\d+)$");
+        internal static Regex unknownFlagExpr = new Regex(@"^Unknown (\d+)$");
         public static readonly string defId = "flags";
 
         //public override bool customSortKey => true;
 
         public Dictionary<int, string> flags;
 
-        public FlagsDef(DefinitionManager manager, JObject src)
+        internal FlagsDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             flags = JsonHelpers.Flags(src, "flags");
         }
@@ -31,7 +30,7 @@ namespace esper.defs {
             return int.Parse(match.Captures[0].Value);
         }
 
-        public List<string> DataToArray(ValueElement element, dynamic data) {
+        internal List<string> DataToArray(ValueElement element, dynamic data) {
             var list = new List<string>();
             var numBits = 8 * element.valueDef.size;
             var u64data = (UInt64)data;
@@ -42,17 +41,17 @@ namespace esper.defs {
             return list;
         }
 
-        public override string DataToValue(ValueElement element, dynamic data) {
+        internal override string DataToValue(ValueElement element, dynamic data) {
             return string.Join(", ", DataToArray(element, data));
         }
 
-        public bool FlagIsSet(dynamic data, string flag) {
+        internal bool FlagIsSet(dynamic data, string flag) {
             var flagIndex = GetFlagIndex(flag);
             if (flagIndex == -1) return false;
             return FlagIsSet(data, flagIndex);
         }
 
-        public bool FlagIsSet(dynamic data, int flagIndex) {
+        internal bool FlagIsSet(dynamic data, int flagIndex) {
             return (data & ((UInt64)1 << flagIndex)) != 0;
         }
 
@@ -66,7 +65,7 @@ namespace esper.defs {
             }
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
+        internal override dynamic ValueToData(ValueElement element, string value) {
             var flags = value.Split(", ");
             UInt64 v = 0;
             foreach (var flag in flags) {
@@ -79,7 +78,7 @@ namespace esper.defs {
 
         // I think this only existed because of the flgUnusedMask 
         // and flgDontShows in xEdit, which we may end up not having
-        public override string GetSortKey(ValueElement element, dynamic data) {
+        internal override string GetSortKey(ValueElement element, dynamic data) {
             UInt64 v = data;
             StringBuilder sortKey = new StringBuilder(new string('0', 64));
             for (int i = 0; i < 64; i++)

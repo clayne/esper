@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace esper.helpers {
@@ -60,8 +59,8 @@ namespace esper.helpers {
 
         // Query 64-bit, then 32-bit registry key, return null otherwise
         static public string TryGetRegKey(UIntPtr inHive, String inKeyName, string inPropertyName) {
-            try { return GetRegKey64(inHive, inKeyName, inPropertyName); } catch {}
-            try { return GetRegKey32(inHive, inKeyName, inPropertyName); } catch {}
+            try { return GetRegKey64(inHive, inKeyName, inPropertyName); } catch { }
+            try { return GetRegKey32(inHive, inKeyName, inPropertyName); } catch { }
             return null;
         }
     }

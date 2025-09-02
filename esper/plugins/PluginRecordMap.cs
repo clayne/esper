@@ -1,7 +1,7 @@
 ﻿using esper.elements;
 
 namespace esper.plugins {
-    [JSExport]
+    //[JSExport]
     public class PluginRecordMap {
         private readonly Dictionary<PluginFile, FormIdMap> _plugins;
 

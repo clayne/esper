@@ -191,8 +191,7 @@ namespace Starfield {
         }
 
         internal void EvaluateSubrecords() {
-            var manager = plugin as IRecordManager;
-            foreach (var record in manager.records) {
+            foreach (var record in plugin.records) {
                 var recordInfo = GetRecordInfo(record);
                 var subrecordCounts = CountSubrecords(record);
                 recordInfo.UpdateStructure(record);

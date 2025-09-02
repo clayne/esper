@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class StringDef : ValueDef {
         public static readonly string defId = "string";
         public override XEDefType valueDefType {
@@ -23,31 +22,31 @@ namespace esper.defs {
 
         protected override bool isVariableSize => prefix == null && fixedSize == null;
 
-        public StringDef(DefinitionManager manager, JObject src)
+        internal StringDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             prefix = src.Value<int?>("prefix");
             padding = src.Value<int?>("padding");
             localized = src.Value<bool>("localized");
             keepCase = src.Value<bool>("keepCase");
-    }
+        }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             if (localized && source.localized)
                 return LocalizedString.Read(source);
             // dataSize - 1 because null terminator
-            int? size = fixedSize ?? 
-                (int?)source.ReadPrefix(prefix, padding) ?? 
-                (dataSize != null ? (int?) (dataSize - 1) : null);
+            int? size = fixedSize ??
+                (int?)source.ReadPrefix(prefix, padding) ??
+                (dataSize != null ? (int?)(dataSize - 1) : null);
             return source.ReadString(size);
         }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return string.Empty;
         }
 
-        public override void SetData(ValueElement element, dynamic data) {
-            string str = (string) data;
-            if (str == null) 
+        internal override void SetData(ValueElement element, dynamic data) {
+            string str = (string)data;
+            if (str == null)
                 throw new Exception("Data must be a string");
             if (!isVariableSize && str.Length != fixedSize)
                 throw new Exception("String length does not match");
@@ -65,10 +64,10 @@ namespace esper.defs {
             SetData(element, value);
         }
 
-        public override string DataToSortKey(dynamic data) {
+        internal override string DataToSortKey(dynamic data) {
             string str = data is LocalizedString lstring
                 ? lstring.ToString()
-                : (string) data;
+                : (string)data;
             if (str == null) return string.Empty;
             return keepCase ? str : str.ToUpper();
         }
@@ -84,7 +83,7 @@ namespace esper.defs {
                 if (prefix != null) size += (UInt32)prefix;
                 if (padding != null) size += (UInt32)padding;
                 if (isVariableSize) size += 1;
-                return (UInt32) (size + s.Length);
+                return (UInt32)(size + s.Length);
             }
         }
 

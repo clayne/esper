@@ -3,7 +3,7 @@ using esper.io;
 using esper.plugins;
 
 namespace esper.data.headers {
-    [JSExport]
+    //[JSExport]
     public struct TES4RecordHeader : IRecordHeader {
         public static UInt32 size => 24;
 
@@ -30,7 +30,7 @@ namespace esper.data.headers {
             ValueElement.Init(structElement, defs[i++], signature.ToString());
             ValueElement.Init(structElement, defs[i++], dataSize);
             ValueElement.Init(structElement, defs[i++], flags);
-            var targetFile = rec.file.OrdinalToFile((byte) (formId >> 24), false);
+            var targetFile = rec.file.OrdinalToFile((byte)(formId >> 24), false);
             var fid = new FormId(targetFile, formId & 0xFFFFFF);
             ValueElement.Init(structElement, defs[i++], fid);
             source.stream.Position += 16;

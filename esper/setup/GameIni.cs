@@ -2,7 +2,7 @@
 using IniParser.Model;
 
 namespace esper.setup {
-    [JSExport]
+    //[JSExport]
     public class GameIni {
         private static readonly string[] TES4Languages = {
             null, "German", "French", "Spanish", "Italian"
@@ -31,7 +31,7 @@ namespace esper.setup {
         }
 
         public List<string> GetArchives() {
-            if (iniData["Archive"] == null) 
+            if (iniData["Archive"] == null)
                 throw new Exception("Archive section not found in game INI");
             var archives = new List<string>();
             AddArchives(archives, "sResourceAchiveList");

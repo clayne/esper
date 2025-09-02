@@ -13,7 +13,7 @@ namespace esper.conflicts {
         private bool? _overrideConflict;
 
         private ElementDef firstDef => firstElement?.def;
-        private bool firstElementIgnored => 
+        private bool firstElementIgnored =>
             firstDef?.conflictType == ConflictType.Ignore;
         private int cellCount => row.cells.Count;
         private int numEmptyValues => UniqueValues.Contains("") ? 1 : 0;
@@ -29,7 +29,7 @@ namespace esper.conflicts {
             get {
                 if (_conflictType == null)
                     _conflictType = ComputeOverallConflictType();
-                return (ConflictType) _conflictType;
+                return (ConflictType)_conflictType;
             }
         }
 
@@ -64,7 +64,7 @@ namespace esper.conflicts {
             get {
                 if (_hasConflict == null)
                     _hasConflict = GetHasConflict();
-                return (bool) _hasConflict;
+                return (bool)_hasConflict;
             }
         }
 
@@ -74,7 +74,7 @@ namespace esper.conflicts {
             var compare = elements.Last();
             var nonMatchingValues = (e == null) != (compare == null) ||
                 (e != null && firstCellValue != lastCellValue);
-            var valueOverride = UniqueValues.Contains("") && 
+            var valueOverride = UniqueValues.Contains("") &&
                 compare != null && lastCellValue != "";
             return nonMatchingValues || valueOverride;
         }
@@ -105,7 +105,7 @@ namespace esper.conflicts {
         }
 
         internal bool IgnoreRow() {
-            return row.cells.Any(cell => 
+            return row.cells.Any(cell =>
                 cell.conflictStatus == CellConflictStatus.Ignored
             );
         }
@@ -146,7 +146,7 @@ namespace esper.conflicts {
             if (overrideConflict)
                 return RowConflictStatus.Override;
             if (conflictType == ConflictType.Critical &&
-                valueCount - numEmptyValues > 1) 
+                valueCount - numEmptyValues > 1)
                 return RowConflictStatus.ConflictCritical;
             return RowConflictStatus.Conflict;
         }

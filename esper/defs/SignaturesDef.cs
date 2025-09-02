@@ -2,13 +2,13 @@
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
+    //[JSExport]
     public class SignaturesDef : Def {
         public static readonly string defId = "signatures";
 
         public List<string> signatures;
 
-        public SignaturesDef(DefinitionManager manager, JObject src)
+        internal SignaturesDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             signatures = JsonHelpers.List<string>(src, "signatures");
         }

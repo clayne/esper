@@ -6,7 +6,7 @@ namespace esper.defs.TES5 {
         public override int Decide(Container container) {
             var e = container.GetElement("Archtype");
             if (e == null) return 0;
-            return e.GetData() switch {
+            return e.GetData<long>() switch {
                 12 => 1, // Light
                 17 => 2, // Bound Item
                 18 => 3, // Summon Creature

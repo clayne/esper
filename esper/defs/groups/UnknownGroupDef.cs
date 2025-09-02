@@ -3,7 +3,6 @@ using esper.elements;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class UnknownGroupDef : GroupDef {
         public static int defGroupType = 10;
         public override int groupType => 10;
@@ -13,10 +12,10 @@ namespace esper.defs {
 
         public override string name => "Unknown";
 
-        public UnknownGroupDef(DefinitionManager manager, JObject src)
+        internal UnknownGroupDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
-        public override dynamic ConvertLabel(GroupRecord group, byte[] label) {
+        internal override dynamic ConvertLabel(GroupRecord group, byte[] label) {
             return FormId.FromSource(
                 group.file,
                 BitConverter.ToUInt32(label)

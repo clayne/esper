@@ -4,18 +4,15 @@ using esper.helpers;
 using esper.resolution;
 using esper.setup;
 using esper.warnings;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
 
 namespace esper.defs.TES5 {
     public class QuestStageFormat : FormatDef {
-        public QuestStageFormat(DefinitionManager manager, JObject src)
+        internal QuestStageFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         private Element GetMatchingStage(MainRecord rec, int index) {
             return rec.GetElements("Stages").FirstOrDefault(stage => {
-                return stage.GetData(@"INDX\Stage Index") == index;
+                return stage.GetData<int>(@"INDX\Stage Index") == index;
             });
         }
 
@@ -38,14 +35,14 @@ namespace esper.defs.TES5 {
         }
 
         private string StageToValue(Element stage) {
-            var index = stage.GetData(@"INDX\Stage Index");
+            var index = stage.GetData<int>(@"INDX\Stage Index");
             var cnam = stage.GetValue(@"Log Entries\Log Entry\CNAM");
             return cnam != null
                 ? $"{index:D3} {cnam}"
                 : $"{index:D3}";
         }
 
-        public override string DataToValue(ValueElement element, dynamic data) {
+        internal override string DataToValue(ValueElement element, dynamic data) {
             var rec = GetQuest(element);
             if (rec == null || rec.signature != Signatures.QUST) return data.ToString();
             var stage = GetMatchingStage(rec, (int)data);
@@ -54,7 +51,7 @@ namespace esper.defs.TES5 {
                 : data.ToString();
         }
 
-        public override dynamic ValueToData(ValueElement element, string value) {
+        internal override dynamic ValueToData(ValueElement element, string value) {
             return DataHelpers.ParseLeadingUInt(value);
         }
     }
@@ -62,7 +59,7 @@ namespace esper.defs.TES5 {
     public class PerkDATAQuestStageFormat : QuestStageFormat {
         public static readonly string defId = "PerkDATAQuestStageFormat";
 
-        public PerkDATAQuestStageFormat(DefinitionManager manager, JObject src)
+        internal PerkDATAQuestStageFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         internal override MainRecord GetQuest(ValueElement element) {
@@ -73,7 +70,7 @@ namespace esper.defs.TES5 {
     public class CTDAParam2QuestStageFormat : QuestStageFormat {
         public static readonly string defId = "CTDAParam2QuestStageFormat";
 
-        public CTDAParam2QuestStageFormat(DefinitionManager manager, JObject src)
+        internal CTDAParam2QuestStageFormat(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
         internal override MainRecord GetQuest(ValueElement element) {

@@ -8,22 +8,22 @@ namespace esper.elements {
         internal List<Element> _internalElements;
         internal MembersDef mdef => (MembersDef)def;
 
-        internal List<Element> internalElements {
+        internal override List<Element> internalElements {
             get {
-                if (_internalElements == null) 
+                if (_internalElements == null)
                     _internalElements = new List<Element>();
                 return _internalElements;
             }
         }
 
-        public virtual ReadOnlyCollection<Element> elements {
+        public override ReadOnlyCollection<Element> elements {
             get => internalElements.AsReadOnly();
         }
 
         public int count => elements.Count;
 
-        public Container(Container container = null, ElementDef def = null) 
-            : base(container, def) {}
+        public Container(Container container = null, ElementDef def = null)
+            : base(container, def) { }
 
         public Element FindElementForDef(ElementDef def) {
             for (int i = elements.Count - 1; i >= 0; i--) {
@@ -53,7 +53,7 @@ namespace esper.elements {
         internal Element AssignDef(ElementDef def, bool replace) {
             var info = GetAssignment(def);
             if (info.assigned && !replace)
-                return internalElements[index]; 
+                return internalElements[index];
             var element = def.NewElement();
             info.Assign(this, element, replace);
             element.container = this;
@@ -109,7 +109,7 @@ namespace esper.elements {
             return new JArray(elements.Select(e => e.ToJson()).ToArray());
         }
 
-        public override JToken ToJson() {
+        internal override JToken ToJson() {
             var o = new JObject();
             foreach (var e in elements)
                 o[e.pathKey] = e.ToJson();

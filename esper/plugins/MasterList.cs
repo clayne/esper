@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 
 namespace esper.plugins {
-    [JSExport]
+    //[JSExport]
     public class MasterList {
         private readonly List<PluginFile> _files;
 
@@ -17,8 +17,8 @@ namespace esper.plugins {
 
         public MasterList(PluginFile parentFile, List<PluginFile> files = null) {
             this.parentFile = parentFile;
-            _files = files != null 
-                ? new List<PluginFile>(files) 
+            _files = files != null
+                ? new List<PluginFile>(files)
                 : new List<PluginFile>();
         }
 
@@ -29,7 +29,7 @@ namespace esper.plugins {
 
         public byte FileToOrdinal(PluginFile file) {
             int index = files.IndexOf(file);
-            return (byte) (index < 0 ? files.Count : index);
+            return (byte)(index < 0 ? files.Count : index);
         }
 
         public void Add(PluginFile file) {
@@ -45,10 +45,10 @@ namespace esper.plugins {
         }
     }
 
-    [JSExport]
+    //[JSExport]
     public class ReadOnlyMasterList : MasterList {
         public ReadOnlyMasterList(PluginFile parentFile, List<PluginFile> files)
-            : base(parentFile, files) {}
+            : base(parentFile, files) { }
 
         public new void Add(PluginFile file) {
             throw new Exception("Cannot add files to a ReadOnlyMasterList.");

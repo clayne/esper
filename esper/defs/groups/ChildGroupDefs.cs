@@ -3,15 +3,14 @@ using esper.elements;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class ChildGroupDef : GroupDef {
         public override bool hasRecordParent => true;
         public override bool isChildGroup => true;
 
-        public ChildGroupDef(DefinitionManager manager, JObject src)
+        internal ChildGroupDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
 
-        public override dynamic ConvertLabel(GroupRecord group, byte[] label) {
+        internal override dynamic ConvertLabel(GroupRecord group, byte[] label) {
             return FormId.FromSource(
                 group.file,
                 BitConverter.ToUInt32(label)
@@ -29,30 +28,30 @@ namespace esper.defs {
         }
     }
 
-    [JSExport]
+    //[JSExport]
     public class WorldChildrenDef : ChildGroupDef {
         public static int defGroupType = 1;
         public override int groupType => 1;
 
-        public WorldChildrenDef(DefinitionManager manager, JObject src)
+        internal WorldChildrenDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
     }
 
-    [JSExport]
+    //[JSExport]
     public class CellChildrenDef : ChildGroupDef {
         public static int defGroupType = 6;
         public override int groupType => 6;
 
-        public CellChildrenDef(DefinitionManager manager, JObject src)
+        internal CellChildrenDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
     }
 
-    [JSExport]
+    //[JSExport]
     public class TopicChildrenDef : ChildGroupDef {
         public static int defGroupType = 7;
         public override int groupType => 7;
 
-        public TopicChildrenDef(DefinitionManager manager, JObject src)
+        internal TopicChildrenDef(DefinitionManager manager, JObject src)
             : base(manager, src) { }
     }
 }

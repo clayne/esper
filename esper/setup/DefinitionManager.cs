@@ -4,12 +4,12 @@ using esper.defs;
 using esper.helpers;
 
 namespace esper.setup {
-    using DefMap = Dictionary<string, Def>;
     using ClassMap = Dictionary<string, Type>;
     using DeciderMap = Dictionary<string, Decider>;
+    using DefMap = Dictionary<string, Def>;
     using RecordDefMap = Dictionary<int, ElementDef>;
 
-    [JSExport]
+    //[JSExport]
     public class DefinitionManager {
         public Session session;
         public Game game => session.game;
@@ -97,25 +97,25 @@ namespace esper.setup {
             foreach (var type in types) LoadClass(type);
         }
 
-        public JObject MergeDef(JObject target, JObject src) {
+        internal JObject MergeDef(JObject target, JObject src) {
             var result = new JObject();
             result.Merge(target);
             result.Merge(src);
             return result;
         }
 
-        public Def BuildBaseDef(JObject src) {
+        internal Def BuildBaseDef(JObject src) {
             var defId = src.Value<string>("type");
             if (defId == "record" && !src.ContainsKey("signature")) return null;
             if (defId == "group") return groupManager.BuildGroupDef(src);
             if (!defClasses.ContainsKey(defId)) return null;
-                //throw new Exception($"Def type not implemented: {defId}");
+            //throw new Exception($"Def type not implemented: {defId}");
             var args = new object[] { this, src };
             var def = (Def)Activator.CreateInstance(defClasses[defId], args);
             return def;
         }
 
-        public Def BuildDef(JObject src) {
+        internal Def BuildDef(JObject src) {
             if (!src.ContainsKey("id"))
                 return BuildBaseDef(src);
             var id = src.Value<string>("id");
@@ -126,7 +126,7 @@ namespace esper.setup {
             return BuildBaseDef(src);
         }
 
-        public JObject ResolveDefSource(string key) {
+        internal JObject ResolveDefSource(string key) {
             var defs = definitions.Value<JObject>("defs");
             if (!defs.ContainsKey(key))
                 throw new Exception("Unknown def: " + key);
@@ -178,14 +178,14 @@ namespace esper.setup {
             return recordDef;
         }
 
-        public void UpdateDef(string defId, JObject src) {
+        internal void UpdateDef(string defId, JObject src) {
             var defs = definitions.Value<JObject>("defs");
             defs[defId] = src;
         }
 
         public void UpdateDefs() {
             session.pluginFileDef.UpdateDef();
-            foreach (var recordDef in recordDefMap.Values) 
+            foreach (var recordDef in recordDefMap.Values)
                 recordDef.UpdateDef();
         }
 

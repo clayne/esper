@@ -1,9 +1,9 @@
-﻿using esper.defs;
-using esper.data;
-using esper.plugins;
-using esper.io;
-using esper.resolution;
+﻿using esper.data;
 using esper.data.headers;
+using esper.defs;
+using esper.io;
+using esper.plugins;
+using esper.resolution;
 using esper.setup;
 using System.Collections.ObjectModel;
 
@@ -58,7 +58,7 @@ namespace esper.elements {
         public UInt32 dataSize => compressed
                     ? recordSource.dataSize
                     : header.dataSize;
-        public bool compressed => _file.sessionOptions.improvise 
+        public bool compressed => _file.sessionOptions.improvise
             ? this.GetRecordFlag(18)
             : this.GetRecordFlag("Compressed");
 
@@ -75,7 +75,7 @@ namespace esper.elements {
         public bool local {
             get {
                 if (fileFormId == 0) return true;
-                var masterCount = (_file as IMasterManager).originalMasters.Count;
+                var masterCount = _file.originalMasters.Count;
                 return (fileFormId >> 24) >= masterCount;
             }
         }
@@ -96,8 +96,8 @@ namespace esper.elements {
             }
         }
 
-        public MainRecord(Container container, ElementDef def) 
-            : base(container, def) {}
+        public MainRecord(Container container, ElementDef def)
+            : base(container, def) { }
 
         public override void Initialize() {
             mrDef.InitElement(this);
@@ -126,7 +126,7 @@ namespace esper.elements {
 
         internal void AddOverride(MainRecord ovr) {
             if (_overrides == null)
-                throw new Exception("Internal overrides array hasn't been initialized.  "+ 
+                throw new Exception("Internal overrides array hasn't been initialized.  " +
                     "Is the record not local or did you not initialize it for a new record?");
             _overrides.Add(ovr);
         }
@@ -155,12 +155,12 @@ namespace esper.elements {
         }
 
         internal void AddRef(MainRecord rec) {
-            if (_referencedBy == null) 
+            if (_referencedBy == null)
                 _referencedBy = new List<MainRecord>();
             _referencedBy.Add(rec);
         }
 
-        internal override Element ResolveIn(Container container) {
+        internal override Element ResolveIn(Element container) {
             foreach (var element in container.internalElements) {
                 if (element is MainRecord rec && rec.formId == formId) {
                     if (rec.signature != signature)
@@ -191,8 +191,8 @@ namespace esper.elements {
             return childGroup;
         }
 
-        internal override Element CopyInto(Container container, CopyOptions options) {
-            var rec = new MainRecord(container, def);
+        internal override Element CopyInto(Element container, CopyOptions options) {
+            var rec = new MainRecord(container as Container, def);
             CopyChildrenInto(rec, options);
             mrDef.UpdateContainedIn(rec);
             if ((options & CopyOptions.CopyChildGroups) > 0)

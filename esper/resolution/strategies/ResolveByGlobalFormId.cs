@@ -3,13 +3,12 @@ using esper.plugins;
 using System.Globalization;
 
 namespace esper.resolution.strategies {
-    [JSExport]
     public class ResolveByGlobalFormId : ResolutionStrategy {
         private static readonly Regex expr = new Regex(@"^[0-9A-F]{8}$");
 
         private bool IsSupportedElement(Element element) {
-            return element is RootElement || 
-                   element is PluginFile  ||
+            return element is RootElement ||
+                   element is PluginFile ||
                    element is GroupRecord;
         }
 

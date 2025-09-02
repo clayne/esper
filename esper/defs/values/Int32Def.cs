@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class Int32Def : ValueDef {
         public static readonly string defId = "int32";
         public override XEDefType valueDefType => XEDefType.dtInteger;
@@ -13,24 +12,24 @@ namespace esper.defs {
 
         public override int? size => 4;
 
-        public Int32Def(DefinitionManager manager, JObject src)
-            : base(manager, src) {}
+        internal Int32Def(DefinitionManager manager, JObject src)
+            : base(manager, src) { }
 
-        public override dynamic ReadData(DataSource source, UInt32? dataSize) {
+        internal override dynamic ReadData(DataSource source, UInt32? dataSize) {
             return source.reader.ReadInt32();
         }
 
-        public override dynamic DefaultData() {
+        internal override dynamic DefaultData() {
             return 0;
         }
 
-        public override string DataToSortKey(dynamic data) {
+        internal override string DataToSortKey(dynamic data) {
             UInt32 v = (UInt32)data;
             v += (UInt32)Math.Abs((Int64)Int32.MinValue);
             return v.ToString("X8");
         }
 
-        public override void SetData(ValueElement element, dynamic data) {
+        internal override void SetData(ValueElement element, dynamic data) {
             element._data = sessionOptions.clampIntegerValues
                 ? DataHelpers.ClampToInt32(data)
                 : (Int32)data;

@@ -4,7 +4,6 @@ using esper.io;
 using esper.setup;
 
 namespace esper.defs {
-    [JSExport]
     public class ArrayDef : MaybeSubrecordDef {
         public static readonly string defId = "array";
         public override XEDefType defType => XEDefType.dtArray;
@@ -29,7 +28,7 @@ namespace esper.defs {
             get => new List<ElementDef>() { elementDef };
         }
 
-        public ArrayDef(DefinitionManager manager, JObject src)
+        internal ArrayDef(DefinitionManager manager, JObject src)
             : base(manager, src) {
             elementDef = JsonHelpers.ElementDef(manager, src, "element");
             counterDef = (CounterDef)JsonHelpers.Def(manager, src, "counter");
@@ -40,8 +39,8 @@ namespace esper.defs {
         }
 
         public UInt32? GetCount(Container container, DataSource source) {
-            return count ?? 
-                source.ReadPrefix(prefix, padding) ?? 
+            return count ??
+                source.ReadPrefix(prefix, padding) ??
                 counterDef?.GetCount(container);
         }
 
@@ -67,8 +66,8 @@ namespace esper.defs {
 
         internal override UInt32 GetSize(Element element) {
             UInt32 size = 0;
-            if (prefix != null) size += (UInt32) prefix;
-            if (padding != null) size += (UInt32) padding;
+            if (prefix != null) size += (UInt32)prefix;
+            if (padding != null) size += (UInt32)padding;
             return size + base.GetSize(element);
         }
 
@@ -76,10 +75,10 @@ namespace esper.defs {
             Element element, PluginFileOutput output
         ) {
             base.WriteElement(element, output);
-            var container = (Container) element;
-            if (prefix != null) 
-                output.WritePrefix(container.count, (int) prefix, padding ?? 0);
-            output.WriteContainer((Container) element);
+            var container = (Container)element;
+            if (prefix != null)
+                output.WritePrefix(container.count, (int)prefix, padding ?? 0);
+            output.WriteContainer((Container)element);
         }
 
         internal void ElementRemoved(Container container) {
