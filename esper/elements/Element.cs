@@ -8,8 +8,8 @@ using System.Collections.ObjectModel;
 namespace esper.elements {
     [JSExport]
     public class Element {
-        public readonly ElementDef def;
-        public ElementState state;
+        public ElementDef def { get; }
+        public ElementState state { get; internal set; }
 
         public virtual Element container { get; internal set; }
         public virtual DefinitionManager manager => file.manager;
@@ -26,7 +26,7 @@ namespace esper.elements {
             get => throw new Exception("Element is not a container.");
         }
 
-        public virtual ReadOnlyCollection<Element> elements {
+        public virtual List<Element> elements {
             get => throw new Exception("Element is not a container.");
         }
 

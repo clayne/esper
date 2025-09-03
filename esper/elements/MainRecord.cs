@@ -88,11 +88,11 @@ namespace esper.elements {
             }
         }
 
-        public override ReadOnlyCollection<Element> elements {
+        public override List<Element> elements {
             get {
                 if (_internalElements == null)
                     mrDef.ReadElements(this, file.source);
-                return internalElements.AsReadOnly();
+                return internalElements.ToList();
             }
         }
 

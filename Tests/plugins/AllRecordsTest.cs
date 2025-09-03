@@ -37,5 +37,11 @@ namespace Tests.plugins {
             var element = plugin.GetElement(path);
             JsonTestHelpers.TestJsonValues(path, element);
         }
+
+        [Test]
+        public void TestRecords() {
+            var element = plugin.GetElement("&00000E01");
+            Assert.AreEqual("MAGPowerSerpentStoneImpactImpact", element.GetValue("EDID"));
+        }
     }
 }

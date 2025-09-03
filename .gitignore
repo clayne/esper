@@ -365,3 +365,5 @@ fixtures/*.esm
 fixtures/skyrim_strings/
 Todos.md
 EsperTest/
+
+js-tests/esper/

@@ -7,12 +7,12 @@ namespace esper.elements {
     public class MemberArrayElement : Container {
         public MemberArrayDef maDef => def as MemberArrayDef;
 
-        public override ReadOnlyCollection<Element> elements {
+        public override List<Element> elements {
             get {
                 if (!maDef.sorted) return base.elements;
                 return internalElements
                     .OrderBy(e => e.sortKey)
-                    .ToList().AsReadOnly();
+                    .ToList();
             }
         }
 

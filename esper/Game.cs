@@ -5,31 +5,31 @@ using IniParser.Model;
 namespace esper {
     [JSExport]
     public class Game {
-        public int xeditId;
-        public string name;
-        public string baseName;
-        public string fullName;
-        public string abbreviation;
-        public string defsNamespace;
-        public string registryName;
-        public string myGamesFolderName;
-        public string appDataFolderName;
-        public string exeName;
-        public string esmName;
-        public string iniName;
-        public string headerTypeKey = "TES4";
-        public string cccName = null;
-        public PluginsTxtType pluginsTxtType = PluginsTxtType.Plain;
-        public string archiveExtension = ".bsa";
-        public UIntPtr registryRoot = RegHive.HKEY_LOCAL_MACHINE;
-        public string registryValue = "Installed Path";
-        public string registryPath = @"SOFTWARE\Bethesda Softworks";
-        public bool extendedArchiveMatching = false;
-        public List<ModuleExtension> pluginExtensions = new List<ModuleExtension> {
+        public int xeditId { get; internal set; }
+        public string name { get; internal set; }
+        public string baseName { get; internal set; }
+        public string fullName { get; internal set; }
+        public string abbreviation { get; internal set; }
+        public string defsNamespace { get; internal set; }
+        public string registryName { get; internal set; }
+        public string myGamesFolderName { get; internal set; }
+        public string appDataFolderName { get; internal set; }
+        public string exeName { get; internal set; }
+        public string esmName { get; internal set; }
+        public string iniName { get; internal set; }
+        public string headerTypeKey { get; internal set; } = "TES4";
+        public string cccName { get; internal set; } = null;
+        public PluginsTxtType pluginsTxtType { get; internal set; } = PluginsTxtType.Plain;
+        public string archiveExtension { get; internal set; } = ".bsa";
+        internal UIntPtr registryRoot = RegHive.HKEY_LOCAL_MACHINE;
+        public string registryValue { get; internal set; } = "Installed Path";
+        public string registryPath { get; internal set; } = @"SOFTWARE\Bethesda Softworks";
+        public bool extendedArchiveMatching { get; internal set; } = false;
+        public List<ModuleExtension> pluginExtensions { get; internal set; } = new List<ModuleExtension> {
             ModuleExtension.ESP, ModuleExtension.ESM
         };
-        public List<string> hardcodedPlugins = new List<string>();
-        public List<int> steamAppIds = new List<int>();
+        public List<string> hardcodedPlugins { get; internal set; } = new List<string>();
+        public List<int> steamAppIds { get; internal set; } = new List<int>();
 
         public string myGamesPath {
             get {

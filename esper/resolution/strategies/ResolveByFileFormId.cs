@@ -18,16 +18,8 @@ namespace esper.resolution.strategies {
             return c.target.file.GetRecordByFormId(fileFormId);
         }
 
-        /*public override Element Resolve(MatchData match) {
-            var c = (FormIdMatch)match;
-            c.rec = ResolveRecord(c);
-            if (c.target is PluginFile file)
-                return c.rec.GetInstanceInFile(file);
-            if (c.target is GroupRecord group) {
-                var ovr = c.rec.GetInstanceInFile(group.file);
-                return ovr != null && ovr.IsContainedIn(group) ? ovr : null;
-            }
-            return null;
+        public override Element Resolve(MatchData match) {
+            return ResolveRecord(match as FormIdMatch);
         }
 
         public override Element Create(MatchData match) {
@@ -35,6 +27,6 @@ namespace esper.resolution.strategies {
             return c.rec?.CopyTo(c.target, 
                 CopyOptions.CopyPreviousOverride    
             );
-        }*/
+        }
     }
 }

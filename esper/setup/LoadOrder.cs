@@ -4,7 +4,7 @@
         private static readonly Regex validFileNameExpr = new Regex(
             @"\.(es[mplu]|ghost)$", RegexOptions.IgnoreCase
         );
-        private readonly Session session;
+        public Session session { get; internal set; }
 
         private List<string> _creationClubPlugins;
         public List<string> creationClubPlugins {
@@ -17,7 +17,7 @@
             }
         }
 
-        public List<ModuleInfo> modules;
+        public List<ModuleInfo> modules { get; }
 
         public LoadOrder(Session session) {
             this.session = session;

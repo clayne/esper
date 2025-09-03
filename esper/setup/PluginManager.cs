@@ -1,4 +1,4 @@
-﻿using esper.data;
+using esper.data;
 using esper.elements;
 using esper.io;
 using esper.plugins;
@@ -6,15 +6,15 @@ using esper.plugins;
 namespace esper.setup {
     [JSExport]
     public class PluginManager {
-        public Session session;
+        public Session session { get; }
         public Game game => session.game;
-        public RootElement root;
-        public bool usingLightPlugins;
-        public int maxLightPluginIndex;
-        public int maxFullPluginIndex;
-        public List<PluginFile> plugins;
-        public List<FullPluginSlot> fullPluginSlots;
-        public List<LightPluginSlot> lightPluginSlots;
+        public RootElement root { get; }
+        public bool usingLightPlugins { get; }
+        public int maxLightPluginIndex { get; }
+        public int maxFullPluginIndex { get; }
+        public List<PluginFile> plugins { get; }
+        public List<FullPluginSlot> fullPluginSlots { get; }
+        public List<LightPluginSlot> lightPluginSlots { get; }
 
         public Logger logger => session.logger;
 

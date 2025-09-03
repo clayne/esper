@@ -13,21 +13,21 @@ namespace esper.setup {
             return 9999999999 * shift;
         }
 
-        public bool keepMasterElementsUpdated = false;
-        public bool allowLightPlugins = true;
-        public bool emulateGlobalLoadOrder = true;
-        public string language = "English";
-        public bool readAllSubrecords = false;
-        public bool clampIntegerValues = true;
-        public bool resolveAliases = false;
-        public bool enforceExpectedReferences = false;
-        public bool loadResources = false;
-        public bool improvise = false;
-        public bool serializeNumericData = false;
+        public bool keepMasterElementsUpdated { get; set; } = false;
+        public bool allowLightPlugins { get; set; } = true;
+        public bool emulateGlobalLoadOrder { get; set; } = true;
+        public string language { get; set; } = "English";
+        public bool readAllSubrecords { get; set; } = false;
+        public bool clampIntegerValues { get; set; } = true;
+        public bool resolveAliases { get; set; } = false;
+        public bool enforceExpectedReferences { get; set; } = false;
+        public bool loadResources { get; set; } = false;
+        public bool improvise { get; set; } = false;
+        public bool serializeNumericData { get; set; } = false;
         private uint _floatDigits = 6;
-        public float epsilon = GetEpsilon(6);
+        public float epsilon { get; internal set; } = GetEpsilon(6);
         public string floatFormat => $"F{floatDigits}";
-        public string gamePath = "";
+        public string gamePath { get; set; } = "";
 
         public uint floatDigits {
             get => _floatDigits;
@@ -37,6 +37,6 @@ namespace esper.setup {
             }
         }
 
-        public Encoding encoding => encodings[language];
+        internal Encoding encoding => encodings[language];
     }
 }

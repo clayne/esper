@@ -2,7 +2,7 @@
 using esper.helpers;
 
 namespace esper.plugins {
-    //[JSExport]
+    [JSExport]
     public static class RecordManagerExtensions {
         public static void InitRecordMaps(this PluginFile m) {
             m.records = new List<MainRecord>((int)m.file.recordCount);

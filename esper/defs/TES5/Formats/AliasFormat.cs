@@ -19,7 +19,7 @@ namespace esper.defs.TES5 {
             return data.ToString();
         }
 
-        private ReadOnlyCollection<Element> GetAliases(MainRecord questRef) {
+        private List<Element> GetAliases(MainRecord questRef) {
             return questRef.GetElements("Aliases");
         }
 

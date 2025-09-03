@@ -13,7 +13,7 @@ namespace esper.plugins {
         public List<string> filenames {
             get => files.Select(f => f.filename).ToList();
         }
-        public PluginFile parentFile;
+        public PluginFile parentFile { get; }
 
         public MasterList(PluginFile parentFile, List<PluginFile> files = null) {
             this.parentFile = parentFile;

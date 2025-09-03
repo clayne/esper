@@ -9,8 +9,8 @@ namespace esper.data {
             new BraceFormat()
         };
 
-        public PluginFile targetPlugin;
-        public UInt32 fileFormId;
+        public PluginFile targetPlugin { get; }
+        public UInt32 fileFormId { get; internal set; }
 
         public UInt32 localFormId => fileFormId & 0xFFFFFF;
         public UInt32? globalFormId {

@@ -6,12 +6,12 @@ namespace esper.elements {
     public class StructElement : Container {
         public StructDef structDef => (StructDef)def;
 
-        public override ReadOnlyCollection<Element> elements {
+        public override List<Element> elements {
             get {
                 if (structDef.elementMap == null) return base.elements;
                 return structDef.elementMap.Select(index => {
                     return internalElements[index];
-                }).ToList().AsReadOnly();
+                }).ToList();
             }
         }
 

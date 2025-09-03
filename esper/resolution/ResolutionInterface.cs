@@ -12,6 +12,7 @@ namespace esper.resolution {
         public static ResolutionStrategies strategies = new ResolutionStrategies {
             new ResolveContainer(),
             new ResolveParent(),
+            new ResolveByFileFormId(),
             new ResolveReference(),
             new ResolveByIndex(),
             new ResolveBySignature(),
@@ -61,12 +62,12 @@ namespace esper.resolution {
             return element;
         }
 
-        public static ReadOnlyCollection<Element> GetElements(this Element r, string path = "") {
+        public static List<Element> GetElements(this Element r, string path = "") {
             Container container = (Container)r.GetElement(path);
             return container?.elements;
         }
 
-        public static ReadOnlyCollection<Element> GetElementsEx(this Element r, string path = "") {
+        public static List<Element> GetElementsEx(this Element r, string path = "") {
             var container = r.GetElementEx(path) as Container;
             if (container == null)
                 throw new Exception("Element does not have child elements.");

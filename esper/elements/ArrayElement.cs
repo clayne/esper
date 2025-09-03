@@ -6,12 +6,12 @@ namespace esper.elements {
     public class ArrayElement : Container {
         public ArrayDef arrayDef => (ArrayDef)def;
 
-        public override ReadOnlyCollection<Element> elements {
+        public override List<Element> elements {
             get {
                 if (!arrayDef.sorted) return base.elements;
                 return internalElements
                     .OrderBy(e => e.sortKey)
-                    .ToList().AsReadOnly();
+                    .ToList();
             }
         }
 

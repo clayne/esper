@@ -6,13 +6,13 @@ using System.Text;
 namespace esper.setup {
     [JSExport]
     public class Session {
-        public Game game;
-        public Logger logger;
-        public SessionOptions options;
-        public DefinitionManager definitionManager;
-        public PluginManager pluginManager;
-        public ResourceManager resourceManager;
-        public string dataPath;
+        public Game game { get; }
+        public Logger logger { get; }
+        public SessionOptions options { get; }
+        public DefinitionManager definitionManager { get; }
+        public PluginManager pluginManager { get; }
+        public ResourceManager resourceManager { get; }
+        public string dataPath { get; set; }
         public GameIni gameIni;
         internal Assembly assembly;
 

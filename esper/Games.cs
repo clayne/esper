@@ -1,7 +1,7 @@
 ﻿namespace esper {
     [JSExport]
     public static class Games {
-        public static Game TES4 = new Game {
+        public static Game TES4 => new Game {
             xeditId = 1,
             name = "Oblivion",
             fullName = "The Elder Scrolls IV: Oblivion",
@@ -9,7 +9,7 @@
             steamAppIds = { 22330, 900883 }
         }.InitDefaults();
 
-        public static Game FO3 = new Game {
+        public static Game FO3 => new Game {
             xeditId = 2,
             name = "Fallout 3",
             abbreviation = "FO3",
@@ -17,7 +17,7 @@
             steamAppIds = { 22300, 22370 }
         }.InitDefaults();
 
-        public static Game FNV = new Game("FalloutNV") {
+        public static Game FNV => new Game("FalloutNV") {
             xeditId = 2,
             name = "Fallout NV",
             fullName = "Fallout: New Vegas",
@@ -27,7 +27,7 @@
             steamAppIds = { 22380, 2028016 }
         }.InitDefaults();
 
-        public static Game TES5 = new Game {
+        public static Game TES5 => new Game {
             xeditId = 4,
             name = "Skyrim",
             fullName = "The Elder Scrolls V: Skyrim",
@@ -37,7 +37,7 @@
             steamAppIds = { 72850 }
         }.InitDefaults();
 
-        public static Game FO4 = new Game("Fallout4") {
+        public static Game FO4 => new Game("Fallout4") {
             xeditId = 6,
             name = "Fallout 4",
             abbreviation = "FO4",
@@ -62,7 +62,7 @@
             steamAppIds = { 377160 }
         }.InitDefaults();
 
-        public static Game SSE = new Game("Skyrim Special Edition", "Skyrim") {
+        public static Game SSE => new Game("Skyrim Special Edition", "Skyrim") {
             xeditId = 7,
             name = "Skyrim SE",
             fullName = "Skyrim: Special Edition",
@@ -85,7 +85,7 @@
             steamAppIds = { 377160 }
         }.InitDefaults();
 
-        public static Game SF = new Game {
+        public static Game SF => new Game {
             xeditId = 9,
             name = "Starfield",
             abbreviation = "SF",

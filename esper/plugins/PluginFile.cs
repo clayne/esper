@@ -9,7 +9,7 @@ using esper.setup;
 namespace esper.plugins {
     [JSExport]
     public class PluginFile : Container {
-        public MainRecord header;
+        public MainRecord header { get; internal set; }
         internal Session session;
         internal string filename;
         internal PluginFileOptions options;
@@ -21,11 +21,11 @@ namespace esper.plugins {
         public bool isDummy => source == null;
         public uint recordCount => header.GetData<uint>(@"HEDR\Number of Records");
 
-        public ReadOnlyMasterList originalMasters { get; set; }
-        public MasterList masters { get; set; }
-        public bool mastersChanged { get; set; }
+        public ReadOnlyMasterList originalMasters { get; internal set; }
+        public MasterList masters { get; internal set; }
+        public bool mastersChanged { get; internal set; }
 
-        public List<MainRecord> records { get; set; }
+        public List<MainRecord> records { get; internal set; }
 
         public override PluginFile file => this;
         public override string name => filename;

@@ -16,8 +16,8 @@ namespace esper.elements {
             }
         }
 
-        public override ReadOnlyCollection<Element> elements {
-            get => internalElements.AsReadOnly();
+        public override List<Element> elements {
+            get => internalElements.ToList();
         }
 
         public int count => elements.Count;
